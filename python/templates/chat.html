@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>チャットシステム</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <h1>相談</h1>
+            <div class="tooltip-container">
+                <span class="tooltip-trigger">相手の情報</span>
+                <div class="tooltip-content">
+                    <p>性別: <span id="tooltip-gender">未入力</span></p>
+                    <p>年齢: <span id="tooltip-age">未入力</span></p>
+                    <p>間柄: <span id="tooltip-relationship">未入力</span></p>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- ユーザー情報入力フォーム -->
+    <form class="user-info-form center" id="user-info-form">
+        <label for="gender-input">性別</label>
+        <input type="text" id="gender-input" name="gender" placeholder="性別を入力" required>
+        <label for="age-input">年齢</label>
+        <input type="number" id="age-input" name="age" placeholder="年齢を入力" required>
+        <label for="relationship-input">間柄</label>
+        <input type="text" id="relationship-input" name="relationship" placeholder="間柄を入力" required>
+        <button type="submit">更新</button>
+    </form>    
+
+    <main class="chat-container">
+        <div class="chat-window" id="chat-window">
+            <!-- チャット履歴を表示 -->
+            {% for message in chat_history %}
+                {% if message.user and message.ai %}
+                    <div class="message user">{{ message.user }}</div>
+                    <div class="message ai">{{ message.ai }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <h2>要望</h2>
+        <form id="chat-form">
+            <input type="text" id="user-request" name="request" placeholder="相談事を入力してください" required>
+            <button type="submit">送信</button>
+        </form>
+    </main>
+
+    <footer>
+        <small>&copy; 2025 9pid GPT</small>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/chattooltip.js') }}"></script>
+</body>
+</html>

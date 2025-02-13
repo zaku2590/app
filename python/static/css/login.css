@@ -1,0 +1,88 @@
+/* ページ全体の背景 */
+body {
+    background-color: #1e5aa5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* ログインフォームのコンテナ */
+.login-container {
+    background-color: white;
+    padding: 30px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 100%;
+    max-width: 400px; /* 最大幅を設定 */
+    display: flex;
+    flex-direction: column; /* 縦方向に並べる */
+    align-items: center; /* コンテンツを中央揃え */
+}
+
+/* タイトル（はみ出し防止） */
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    white-space: nowrap; /* 改行させない */
+    overflow: hidden;
+    text-overflow: ellipsis; /* はみ出たら「...」に */
+}
+
+/* 入力フィールド */
+.login-form input {
+    width: 100%; /* 横幅を100%に */
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #e6f0ff;
+    display: block;
+}
+
+/* ログインボタン */
+.login-form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px; /* ボタン下部に余白を追加 */
+}
+
+/* ホバー時のエフェクト */
+.login-form button:hover {
+    background-color: #218838;
+}
+
+/* 新規登録画面遷移ボタン */
+.register-link {
+    text-decoration: none;
+    display: block;
+    width: 100%; /* 横幅100% */
+    margin-top: 10px; /* 上部の余白を少し追加 */
+}
+
+.register-button {
+    padding: 12px 25px;
+    background-color: #5E9FF2; /* 明るい青色 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%; /* 横幅100%にしてフォーム下に表示 */
+    transition: background-color 0.3s ease;
+}
+
+/* 新規登録ボタンホバー時 */
+.register-button:hover {
+    background-color: #4A86D4; /* ホバー時に色が変わる */
+}

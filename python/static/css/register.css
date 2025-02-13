@@ -1,0 +1,72 @@
+/* ページ全体の背景 */
+body {
+    background-color: #1e5aa5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* 新規登録フォームのコンテナ */
+.register-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 320px; /* 横幅を固定 */
+}
+
+/* タイトル */
+h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* 入力フィールド */
+.register-form input {
+    width: calc(100% - 20px); /* 横幅を調整 */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #e6f0ff;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ボタン */
+.register-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ホバー時のエフェクト */
+.register-form button:hover {
+    background-color: #218838;
+}
+
+/* ログイン画面へのリンク */
+.login-redirect {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.login-redirect a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.login-redirect a:hover {
+    text-decoration: underline;
+}

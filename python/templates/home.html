@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>すき間ジム | スキマ時間で成長を</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
+<body>
+    <div class="header">すき間ジム</div>
+    <div class="main-visual">スキマ時間で知識と健康をアップデート</div>
+    <div class="features">
+        <div class="feature">
+            <img src="{{ url_for('static', filename='img/本.jpg') }}" alt="本の要約">
+            <h3>本の要約</h3>
+            <p>短時間で本の内容を理解</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='img/悩み.jpg') }}" alt="悩み管理">
+            <h3>悩み管理</h3>
+            <p>悩みを記録してベストな解決策を探す</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='img/健康.png') }}" alt="栄養分析">
+            <h3>栄養分析</h3>
+            <p>食事を解析して足りない栄養をチェック</p>
+        </div>
+        <div class="feature">
+            <img src="{{ url_for('static', filename='img/知識.jpg') }}" alt="ブログ">
+            <h3>ブログ</h3>
+            <p>成長のための知識を共有</p>
+        </div>
+    </div>
+    <div class="footer">&copy; 2025 すき間ジム | All Rights Reserved</div>
+</body>
+</html>

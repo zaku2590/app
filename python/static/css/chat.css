@@ -1,0 +1,248 @@
+/* Reset */
+html {
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #F0F4F8;
+}
+
+/* カスタムプロパティ（変数） */
+:root {
+    --primary-color: #283044;
+    --secondary-color: #F0F4F8;
+    --accent-color: #5E9FF2;
+    --accent-hover-color: #4A86D4;
+    --font-color: #333;
+    --background-color: #ffffff;
+}
+
+/* Header */
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.header-container h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1.5px;
+    font-weight: bold;
+}
+
+/* Main chat container */
+.chat-container {
+    max-width: 1200px;
+    margin: 60px auto;
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat window */
+.chat-window {
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 20px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Message styles */
+.message {
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 25px;
+    max-width: 75%;
+    font-size: 1rem;
+    line-height: 1.5;
+    position: relative;
+    color: var(--font-color);
+}
+
+.user {
+    background-color: #DFF7E0;
+    align-self: flex-start;
+    margin-left: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.ai {
+    background-color: #E0F2FF;
+    align-self: flex-end;
+    margin-right: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Chat form */
+.chat-form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+}
+
+.chat-input {
+    width: 80%;
+    padding: 15px;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    background-color: var(--secondary-color);
+    font-size: 1rem;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.chat-send-btn {
+    width: 15%;
+    padding: 15px 0;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.chat-send-btn:hover {
+    background-color: var(--accent-hover-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+
+/* アクセシビリティ向上のためのクラス */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 600px) {
+    .chat-container {
+        margin: 20px;
+        padding: 10px;
+    }
+
+    .chat-input, .chat-send-btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .chat-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/* ツールチップコンテナのスタイル */
+.tooltip-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    z-index: 100;
+}
+
+/* ツールチップの内容（非表示がデフォルト） */
+.tooltip-content {
+    display: none;
+    position: absolute;
+    top: 120%; /* ヘッダーの下に少しスペースを空けて配置 */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 0.9rem;
+    min-width: 300px; /* 最小幅を設定 */
+    max-width: 500px; /* 最大幅を設定 */
+}
+
+/* ツールチップをホバー時に表示 */
+.tooltip-container:hover .tooltip-content {
+    display: block;
+}
+
+/* ツールチップトリガーのスタイル */
+.tooltip-trigger {
+    color: #007bff;
+    text-decoration: underline;
+    font-size: 0.9rem;
+}
+
+/* ツールチップ外のフォーム */
+.user-info-form.center {
+    display: flex;
+    flex-direction: row; /* 横並び */
+    justify-content: center; /* 中央寄せ */
+    align-items: center; /* アイテムを縦方向に中央揃え */
+    gap: 15px; /* 各項目の間に余白を追加 */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 900px; /* 最大幅を設定 */
+    margin: 0 auto; /* フォームを中央寄せ */
+    margin-top: 30px; /* 上部にスペースを作る */
+}
+
+/* フォーム内の各入力フィールドのサイズ調整 */
+.user-info-form input {
+    width: 30%; /* 入力フィールドを横並びで30%幅に設定 */
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center; /* 入力テキストを中央寄せ */
+}
+
+/* フォームのボタンのスタイル */
+.user-info-form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.user-info-form button:hover {
+    background-color: #45a049;
+}
