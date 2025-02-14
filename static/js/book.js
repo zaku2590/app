@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatForm = document.getElementById("chat-form");
     const chatInput = document.getElementById("user-request");
     const chatWindow = document.getElementById("chat-window");
+    const loadingMessage = document.getElementById("loading-message");
 
     chatForm.addEventListener("submit", async function (event) {
         event.preventDefault();
@@ -12,8 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        appendMessage("user", userMessage);
+        appendMessage("user", "👤 " + userMessage);
         chatInput.value = ""; // 入力欄をクリア
+        loadingMessage.style.display = "block"; // AIの返信待機中を表示
 
         try {
             const response = await fetch("/chat2", {
@@ -23,13 +25,16 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const data = await response.json();
+            loadingMessage.style.display = "none"; // AIの返信待機中を非表示
+
             if (data.ai) {
-                appendMessage("ai", data.ai);
+                appendMessage("ai", "🤖 " + data.ai);
             } else {
                 appendMessage("ai", "エラーが発生しました。");
             }
         } catch (error) {
             console.error("Error:", error);
+            loadingMessage.style.display = "none"; // AIの返信待機中を非表示
             appendMessage("ai", "サーバーに接続できませんでした。");
         }
     });
