@@ -7,6 +7,10 @@ main_bp = Blueprint("main", __name__)
 def login_page():
     return render_template("home.html")
 
+@main_bp.route("/nutrition", methods=["GET"])
+def nutrition_page():
+    return render_template("nutrition.html")
+
 @main_bp.route("/register", methods=["GET"])
 def register_page():
     return render_template("register.html")
