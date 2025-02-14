@@ -1,7 +1,7 @@
 import openai
 import os
 
-def generate_response(book_title):
+def generate_response_book(book_title):
     prompt = f"""
     本のタイトル:
     {book_title}

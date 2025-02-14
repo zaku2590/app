@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect
-from app.services import generate_response
+from app.services import generate_response_book
 
 main_bp = Blueprint("main", __name__)
 
@@ -34,7 +34,7 @@ def chat2():
     if not user_query:
         return jsonify({"error": "メッセージが空です"}), 400
 
-    ai_response = generate_response(user_query)
+    ai_response = generate_response_book(user_query)
 
     session.setdefault("chat_history", []).append({"user": user_query, "ai": ai_response})
     session.modified = True
