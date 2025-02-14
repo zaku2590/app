@@ -62,11 +62,11 @@ def login():
     else:
         return "ログイン失敗！<a href='/'>戻る</a>"
 
-@app.route("/chat", methods=["GET"])
-def chat():
+@app.route("/book", methods=["GET"])
+def book():
     if "chat_history" not in session:
         session["chat_history"] = []
-    return render_template("chat.html", chat_history=session["chat_history"])
+    return render_template("book.html", chat_history=session["chat_history"])
 
 @app.route("/chat2", methods=["POST"])
 def chat2():

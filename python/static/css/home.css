@@ -14,6 +14,7 @@ body {
 .main-visual {
     width: 100%;
     height: 300px;
+    background: url('https://via.placeholder.com/1200x300') no-repeat center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -23,29 +24,72 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 .features {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 40px;
-    padding: 40px 20px;
+    padding: 60px;
     background-color: white;
-    max-width: 600px;
+    max-width: 900px;
     margin: auto;
+    text-align: center;
 }
 .feature {
-    text-align: center;
-    width: 45%;
-    box-sizing: border-box;
+    padding: 20px;
+    background: #f0f8ff;
+    border-radius: 15px;
+    border: 2px solid #2196F3;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+.feature:hover {
+    background-color: #2196F3;
+    color: white;
+    transform: scale(1.05);
+}
+.feature-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
 }
 .feature img {
-    width: 100px;
-    height: 100px;
-    display: block;
-    margin: 0 auto;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 15px;
+}
+.separator {
+    display: none;
 }
 .footer {
     background-color: #1565C0;
     color: white;
     text-align: center;
-    padding: 15px;
+    padding: 20px;
+}
+.features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    padding: 60px;
+    background-color: white;
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+/* スマホ（画面幅が768px以下）の場合 */
+@media (max-width: 768px) {
+    .features {
+        grid-template-columns: 1fr; /* 1列に変更 */
+        gap: 20px; /* スペース調整 */
+        padding: 30px;
+    }
+
+    .feature {
+        width: 90%;
+        margin: auto;
+    }
 }
