@@ -14,8 +14,9 @@ def generate_response(book_title):
 
         response = client.chat.completions.create(
             model="gpt-4",
+            # あなたは本の要約を2000〜2500文字で作成する日本語対応のAIです。
             messages=[
-                {"role": "system", "content": "あなたは本の要約を2000〜2500文字で作成する日本語対応のAIです。"},
+                {"role": "system", "content": "あなたは本に一言のキャッチコピーを作成する日本語対応のAIです。"},
                 {"role": "user", "content": prompt}
             ]
         )

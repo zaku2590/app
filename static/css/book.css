@@ -94,7 +94,7 @@ header {
 
 /* Main chat container */
 .chat-container {
-    max-width: 1200px;
+    max-width: 800px;
     margin: 40px auto;
     background-color: var(--background-color);
     padding: 20px;
@@ -114,6 +114,33 @@ header {
     border: 1px solid #e0e0e0;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
+}
+
+.message {
+    padding: 15px 20px;
+    border-radius: 25px;
+    max-width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    position: relative;
+    color: var(--font-color);
+}
+
+/* AIの返信待機アニメーション */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    padding: 10px;
+    animation: fadeInOut 1s infinite alternate;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0.3; }
+    100% { opacity: 1; }
 }
 
 /* Footer */
