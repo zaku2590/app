@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
         loadingMessage.style.display = "block"; // AIの返信待機中を表示
 
         try {
-            const response = await fetch("/chat2", {
+            const response = await fetch("/chat", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ message: userMessage })
