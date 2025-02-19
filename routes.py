@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect
 from werkzeug.utils import secure_filename
-from app.services import generate_response_book, analyze_nutrition, allowed_file
+from app.services import generate_response_book, analyze_food, allowed_file
 import os
 main_bp = Blueprint("main", __name__)
 
@@ -52,21 +52,47 @@ def chat():
 
 @main_bp.route('/upload', methods=['POST'])
 def upload_file():
-    if 'food-image' not in request.files:
-        return jsonify({'error': 'ファイルが見つかりません'}), 400
-    
-    file = request.files['food-image']
-    if file.filename == '':
-        return jsonify({'error': 'ファイルが選択されていません'}), 400
-    
-    if file and allowed_file(file.filename):
+    try:
+        print("📥 画像アップロード処理開始")  # ✅ ログを追加
+
+        # ファイルが送信されたか確認
+        if 'food-image' not in request.files:
+            print("🚨 ファイルが見つかりません")
+            return jsonify({'error': 'ファイルが見つかりません'}), 400
+
+        file = request.files['food-image']
+
+        # ファイルが選択されているかチェック
+        if file.filename == '':
+            print("🚨 ファイルが選択されていません")
+            return jsonify({'error': 'ファイルが選択されていません'}), 400
+
+        # ファイルの拡張子が許可されているか確認
+        if not allowed_file(file.filename):
+            print("🚨 無効なファイル形式")
+            return jsonify({'error': '無効なファイル形式です'}), 400
+
+        # アップロードフォルダの設定
+        UPLOAD_FOLDER = os.path.join(os.getcwd(), "uploads")
+        if not os.path.exists(UPLOAD_FOLDER):
+            os.makedirs(UPLOAD_FOLDER)  # フォルダがない場合は作成
+
+        # ファイルを保存
         filename = secure_filename(file.filename)
         filepath = os.path.join(UPLOAD_FOLDER, filename)
         file.save(filepath)
-        
-        # 画像解析の実行
-        analysis_result = analyze_nutrition(filepath)
-        
-        return jsonify({'message': '解析完了', 'result': analysis_result})
-    
-    return jsonify({'error': '無効なファイル形式です'}), 400
+
+        # 画像解析を実行
+        analysis_result = analyze_food(filepath)
+
+        # 解析結果が `None` だった場合のエラーハンドリング
+        if analysis_result is None:
+            print("🚨 `analyze_food()` が `None` を返しました")
+            return jsonify({'error': '画像解析に失敗しました'}), 500
+
+        # `JSON` 形式で返す (result をオブジェクトとして統一)
+        return jsonify({'message': '解析完了', 'result': {'解析結果': analysis_result}})
+
+    except Exception as e:
+        print(f"🚨 サーバーエラー: {str(e)}")  # ✅ ログを追加
+        return jsonify({'error': f'サーバーエラー: {str(e)}'}), 500

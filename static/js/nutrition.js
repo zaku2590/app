@@ -6,29 +6,39 @@ document.addEventListener("DOMContentLoaded", function() {
         const fileInput = document.getElementById("food-image");
         formData.append("food-image", fileInput.files[0]);
         
-        const response = await fetch("/upload", {
-            method: "POST",
-            body: formData
-        });
-        
-        const result = await response.json();
         const resultWindow = document.getElementById("analysis-result");
+        resultWindow.innerHTML = "<strong>解析中...</strong>"; // 解析中メッセージを表示
         
-        resultWindow.innerHTML = ""; // クリア
+        try {
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
 
-        if (result.message) {
-            resultWindow.innerHTML += `<strong>${result.message}</strong><br>`;
-        }
-        if (result.result) {
-            resultWindow.innerHTML += `<strong>検出された食品:</strong> ${result.result['検出された食品'].join(", ")}<br>`;
-            resultWindow.innerHTML += `<strong>含まれる栄養素:</strong> ${result.result['含まれる栄養素'].join(", ")}<br>`;
-            resultWindow.innerHTML += `<strong>不足している栄養素:</strong> ${result.result['不足している栄養素'].join(", ")}<br>`;
-            
-            let suggestions = "";
-            for (let nutrient in result.result['補うための食材']) {
-                suggestions += `<strong>${nutrient}:</strong> ${result.result['補うための食材'][nutrient].join(", ")}<br>`;
+            const result = await response.json();
+            console.log("🚀 サーバーからのレスポンス:", result);  // ✅ JSONの構造を確認
+
+            resultWindow.innerHTML = ""; // クリア
+
+            // エラーハンドリング
+            if (result.error) {
+                resultWindow.innerHTML = `<strong>エラー: ${result.error}</strong>`;
+                return;
             }
-            resultWindow.innerHTML += `<strong>補うための食材:</strong><br> ${suggestions}`;
+
+            // `result.result` がオブジェクトになっているので、適切に処理
+            if (typeof result.result === "object" && result.result.解析結果) {
+                resultWindow.innerHTML = `<strong>解析結果:</strong><br>${result.result.解析結果.replace(/\n/g, "<br>")}`;
+            } else if (typeof result.result === "string") {
+                resultWindow.innerHTML = `<strong>解析結果:</strong><br>${result.result.replace(/\n/g, "<br>")}`;
+            } else {
+                resultWindow.innerHTML = "<strong>エラー: 解析結果の形式が正しくありません。</strong>";
+                console.error("🚨 解析結果のデータ形式エラー:", result.result);
+            }
+
+        } catch (error) {
+            console.error("🚨 フェッチエラー:", error);
+            resultWindow.innerHTML = "<strong>エラーが発生しました。もう一度試してください。</strong>";
         }
     });
 });
