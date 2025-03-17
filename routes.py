@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect
 from werkzeug.utils import secure_filename
 from app.services import generate_response_book, analyze_food, allowed_file
+from app.models import db, Progress
 import os
 main_bp = Blueprint("main", __name__)
 
@@ -20,14 +21,18 @@ def nutrition_page():
 def register_page():
     return render_template("register.html")
 
-@main_bp.route("/login", methods=["POST"])
+@main_bp.route("/login", methods=["GET"])
+def login_page():
+    return render_template("login.html")
+
+@main_bp.route("/login_input", methods=["POST"])
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
 
     if username == "admin" and password == "password":
         session["user"] = username
-        return redirect("/book")
+        return redirect("/home")
     else:
         return "ログイン失敗！<a href='/'>戻る</a>"
 
@@ -96,3 +101,27 @@ def upload_file():
     except Exception as e:
         print(f"🚨 サーバーエラー: {str(e)}")  # ✅ ログを追加
         return jsonify({'error': f'サーバーエラー: {str(e)}'}), 500
+    
+@main_bp.route("/progress_calendar", methods=["GET"])
+def get_progress_calendar():
+    if "user_id" not in session:
+        return jsonify({"error": "ログインが必要です"}), 401
+
+    user_id = session["user_id"]
+    progress_data = Progress.query.filter_by(user_id=user_id).all()
+
+    # カレンダー用に日付ごとの進捗をまとめる
+    progress_dict = {}
+    for p in progress_data:
+        date_str = p.date.strftime("%Y-%m-%d")
+        progress_dict[date_str] = {
+            "books_read": p.books_read,
+            "nutrition_status": p.nutrition_status
+        }
+
+    return jsonify(progress_dict)
+
+# 📆 カレンダーページを表示
+@main_bp.route("/progress_calendar_page", methods=["GET"])
+def progress_calendar_page():
+    return render_template("progress_calendar.html")
