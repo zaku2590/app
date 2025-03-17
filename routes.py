@@ -10,7 +10,7 @@ UPLOAD_FOLDER = 'static/uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @main_bp.route("/", methods=["GET"])
-def login_page():
+def home_page():
     return render_template("home.html")
 
 @main_bp.route("/nutrition", methods=["GET"])
