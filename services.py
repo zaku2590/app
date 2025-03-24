@@ -1,10 +1,8 @@
 import openai
 import os
-import cv2
-import torch
 import base64
 import numpy as np
-from ultralytics import YOLO
+
 
 def generate_response_book(book_title):
     prompt = f"""
