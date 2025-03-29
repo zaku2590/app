@@ -1,0 +1,39 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+    background: #f2f2f2;
+    text-align: center;
+    padding: 50px;
+  }
+  
+  h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+  }
+  
+  #mode {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: #555;
+  }
+  
+  #timer {
+    font-size: 5em;
+    margin: 20px;
+    color: #333;
+  }
+  
+  .buttons button {
+    font-size: 1em;
+    padding: 10px 20px;
+    margin: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background: #007bff;
+    color: white;
+    transition: background 0.2s;
+  }
+  
+  .buttons button:hover {
+    background: #0056b3;
+  }

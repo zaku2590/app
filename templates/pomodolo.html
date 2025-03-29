@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ポモドーロタイマー</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/pomodolo.css') }}">
+</head>
+<body>
+  <h1>ポモドーロタイマー</h1>
+  <div id="mode">作業中</div>
+  <div id="timer">25:00</div>
+  <div class="buttons">
+    <button id="start">スタート</button>
+    <button id="stop">ストップ</button>
+    <button id="reset">リセット</button>
+  </div>
+  <script src="{{ url_for('static', filename='js/pomodolo.js') }}"></script>
+</body>
+</html>

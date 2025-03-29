@@ -11,13 +11,6 @@
     <div class="main-visual">スキマ時間で知識と健康を<br>アップデート</div>
     <div class="features">
         <div class="feature">
-            <a href="/book" class="feature-button">
-                <img src="{{ url_for('static', filename='img/本.jpg') }}" alt="本の要約">
-                <h3>本の要約</h3>
-                <p>短時間で本の内容を理解</p>
-            </a>
-        </div>
-        <div class="feature">
             <a href="/progress_calendar_page" class="feature-button">
                 <img src="{{ url_for('static', filename='img/カレンダー.jpg') }}" alt="カレンダー">
                 <h3>カレンダー</h3>
@@ -25,10 +18,17 @@
             </a>
         </div>
         <div class="feature">
+            <a href="/pomodolo" class="feature-button">
+                <img src="{{ url_for('static', filename='img/本.jpg') }}" alt="本の要約">
+                <h3>ポモドーロタイマー</h3>
+                <p>集中力アップ</p>
+            </a>
+        </div>
+        <div class="feature">
             <a href="/nutrition" class="feature-button">
                 <img src="{{ url_for('static', filename='img/健康.png') }}" alt="栄養分析">
-                <h3>栄養分析</h3>
-                <p>食事を解析して、健康・肌に足りない栄養をチェック</p>
+                <h3>今日の一言</h3>
+                <p>頑張り具合を評価！</p>
             </a>
         </div>
         <div class="feature">
