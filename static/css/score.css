@@ -1,0 +1,49 @@
+body {
+    font-family: "Noto Sans JP", sans-serif;
+    background: #E3F2FD;
+    text-align: center;
+    padding: 60px;
+    margin: 0;
+  }
+  
+  .container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  h1 {
+    color: #1565C0;
+    margin-bottom: 30px;
+  }
+  
+  #score-button {
+    font-size: 1.2em;
+    padding: 15px 30px;
+    background: #2196F3;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  #score-button:hover {
+    background: #1976D2;
+  }
+  
+  #score-display {
+    font-size: 3em;
+    color: #0D47A1;
+    margin-top: 30px;
+  }
+  
+  #comment-display {
+    font-size: 1.3em;
+    color: #333;
+    margin-top: 10px;
+  }
+  

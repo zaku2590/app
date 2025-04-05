@@ -1,39 +1,66 @@
 body {
-    font-family: 'Helvetica', sans-serif;
-    background: #f2f2f2;
-    text-align: center;
-    padding: 50px;
-  }
-  
-  h1 {
-    font-size: 2em;
-    margin-bottom: 10px;
-  }
-  
-  #mode {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #555;
-  }
-  
+  font-family: "Noto Sans JP", sans-serif;
+  background: #E3F2FD;
+  text-align: center;
+  padding: 50px;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #1565C0;
+}
+
+#mode {
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  color: #1976D2;
+  font-weight: bold;
+}
+
+#timer {
+  font-size: 5em;
+  margin: 30px 0;
+  color: #0D47A1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.buttons button {
+  font-size: 1.1em;
+  padding: 12px 25px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background: #2196F3;
+  color: white;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.buttons button:hover {
+  background: #1976D2;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
   #timer {
-    font-size: 5em;
-    margin: 20px;
-    color: #333;
+    font-size: 4em;
   }
-  
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .buttons button {
-    font-size: 1em;
-    padding: 10px 20px;
-    margin: 10px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background: #007bff;
-    color: white;
-    transition: background 0.2s;
+    width: 80%;
+    max-width: 300px;
   }
-  
-  .buttons button:hover {
-    background: #0056b3;
-  }
+}
