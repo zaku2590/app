@@ -102,6 +102,7 @@ body {
     font-size: 24px;
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
+    position: relative;
 }
 .logo {
     font-weight: bold;
@@ -117,4 +118,24 @@ body {
 }
 .login-button:hover {
     background-color: #45a049;
+}
+.welcome {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: #1565C0;
+}
+.logout-button {
+    font-size: 16px;
+    padding: 8px 16px;
+    background-color: #f44336;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+.logout-button:hover {
+    background-color: #d32f2f;
 }

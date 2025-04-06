@@ -46,15 +46,16 @@ h2 {
 
 /* ログインボタン */
 .login-form button {
-    width: 100%;
-    padding: 12px;
+    width: auto; /* 横幅を内容に合わせる */
+    padding: 12px 24px;
     background-color: #28a745;
     color: white;
     font-size: 16px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-bottom: 20px; /* ボタン下部に余白を追加 */
+    margin: 0 auto 20px auto; /* 中央寄せ */
+    display: block; /* ブロック要素にして中央揃え有効に */
 }
 
 /* ホバー時のエフェクト */
@@ -85,4 +86,16 @@ h2 {
 /* 新規登録ボタンホバー時 */
 .register-button:hover {
     background-color: #4A86D4; /* ホバー時に色が変わる */
+}
+.register-button {
+    padding: 12px 24px;
+    background-color: #5E9FF2;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    display: block;
+    margin: 0 auto; /* 中央揃え */
+    transition: background-color 0.3s ease;
 }

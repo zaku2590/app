@@ -9,7 +9,12 @@
 <body>
     <div class="header-container">
         <div class="logo">すき間ジム</div>
-        <a href="/login" class="login-button">ログイン</a>
+        {% if user %}
+          <div class="welcome">こんにちは、{{ user }}さん</div>
+          <a href="/logout" class="logout-button">ログアウト</a>
+        {% else %}
+          <a href="/login" class="login-button">ログイン</a>
+        {% endif %}
     </div>
     <div class="main-visual">スキマ時間で知識と健康を<br>アップデート</div>
     <div class="features">

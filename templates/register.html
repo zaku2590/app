@@ -4,30 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>新規登録画面</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
-    <div class="register-container">
+    <div class="login-container">
         <h2>新規登録</h2>
-        <form class="register-form" action="/register" method="POST">
-            <label for="username-input">ユーザー名:</label>
-            <input type="text" id="username-input" name="username" placeholder="ユーザー名を入力" required>
-
-            <label for="email-input">メールアドレス:</label>
-            <input type="email" id="email-input" name="email" placeholder="メールアドレスを入力" required>
-
-            <label for="password-input">パスワード:</label>
-            <input type="password" id="password-input" name="password" placeholder="パスワードを入力" required>
-
-            <label for="confirm-password-input">パスワード確認:</label>
-            <input type="password" id="confirm-password-input" name="confirm_password" placeholder="パスワードを確認" required>
-
+        <form class="login-form" action="/register_input" method="POST">
+            <input type="text" name="username" placeholder="ユーザー名" required>
+            <input type="password" name="password" placeholder="パスワード" required>
             <button type="submit">登録</button>
         </form>
 
-        <div class="login-redirect">
-            <p>既にアカウントをお持ちですか？ <a href="/">ログイン画面へ</a></p>
-        </div>
+        <a href="/login" class="register-link">
+            <button type="button" class="register-button">ログイン画面へ</button>
+        </a>
     </div>
 </body>
 </html>
