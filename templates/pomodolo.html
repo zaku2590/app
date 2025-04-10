@@ -6,13 +6,17 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/pomodolo.css') }}">
 </head>
 <body>
-  <h1>ポモドーロタイマー</h1>
-  <div id="mode">作業中</div>
-  <div id="timer">25:00</div>
-  <div class="buttons">
-    <button id="start">スタート</button>
-    <button id="stop">ストップ</button>
-    <button id="reset">リセット</button>
+  <div class="timer-container">
+    <div class="circle">
+      <div id="timer">25:00</div>
+      <div id="mode">作業中</div>
+    </div>
+    <div class="buttons">
+      <button id="start">▶</button>
+      <button id="stop">■</button>
+      <button id="reset">↺</button>
+    </div>
+    <div id="pomodoro-count">現在 0 ポモドーロ</div>
   </div>
   <script src="{{ url_for('static', filename='js/pomodolo.js') }}"></script>
 </body>

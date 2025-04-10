@@ -2,17 +2,31 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>今日の点数</title>
+  <title>AI採点</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/score.css') }}">
 </head>
 <body>
-  <div class="container">
-    <h1>今日の点数は？</h1>
-    <button id="score-button">点数をつける！</button>
-    <div id="score-display"></div>
-    <div id="comment-display"></div>
+  <div class="score-container">
+    <h1>📊 自動採点</h1>
+    <p>今日のポモドーロ記録とメモをもとに、AIが採点します。</p>
+
+    <button id="scoreButton">🧠 採点する</button>
+
+    <div id="resultBox" style="display:none;">
+      <h3>採点結果</h3>
+      <p id="scoreResult">...</p>
+    </div>
   </div>
-  <script src="{{ url_for('static', filename='js/score.js') }}"></script>
+
+  <script>
+    document.getElementById("scoreButton").addEventListener("click", () => {
+      fetch("/score_today")
+        .then(res => res.json())
+        .then(data => {
+          document.getElementById("resultBox").style.display = "block";
+          document.getElementById("scoreResult").textContent = data.result;
+        });
+    });
+  </script>
 </body>
 </html>

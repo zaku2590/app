@@ -1,6 +1,7 @@
-from flask import Flask
-from dotenv import load_dotenv
 import os
+from flask import Flask
+from authlib.integrations.flask_client import OAuth
+from dotenv import load_dotenv
 from app.models import db
 
 def create_app():
@@ -12,10 +13,26 @@ def create_app():
 
     # アプリの設定を適用
     app.config.from_object("app.config.Config")
-    
-    db.init_app(app)  # db接続
 
-    # ルート（エンドポイント）を登録
+    # DB初期化
+    db.init_app(app)
+
+    # OAuth登録（OAuth 1.0a 用）
+    oauth = OAuth(app)
+    twitter = oauth.register(
+        name='twitter',
+        client_key=os.getenv("TWITTER_API_KEY"),      # ← 修正ポイント
+        client_secret=os.getenv("TWITTER_API_SECRET"),
+        request_token_url='https://api.twitter.com/oauth/request_token',
+        access_token_url='https://api.twitter.com/oauth/access_token',
+        authorize_url='https://api.twitter.com/oauth/authorize',
+        api_base_url='https://api.twitter.com/1.1/',
+    )
+
+    # twitterオブジェクトをFlaskアプリに追加
+    app.twitter = twitter
+
+    # ルート（エンドポイント）を登録（最後）
     from app.routes import main_bp
     app.register_blueprint(main_bp)
 

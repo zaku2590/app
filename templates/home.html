@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -9,17 +8,26 @@
 <body>
     <div class="header-container">
         <div class="logo">すき間ジム</div>
+
         {% if user %}
           <div class="welcome">こんにちは、{{ user }}さん</div>
           <a href="/logout" class="logout-button">ログアウト</a>
         {% else %}
           <a href="/login" class="login-button">ログイン</a>
         {% endif %}
+
+        {% if session.twitter_user %}
+          <div class="welcome">こんにちは、@{{ session.twitter_user }} さん</div>
+          <a href="/logout" class="logout-button">ログアウト</a>
+        {% else %}
+          <a href="/login/twitter" class="login-button">Xでログイン</a>
+        {% endif %}
     </div>
-    <div class="main-visual">スキマ時間で知識と健康を<br>アップデート</div>
+
+    <div class="main-visual">ぽもログ、あなたの“ちょっとずつ”を応援します</div>
     <div class="features">
         <div class="feature">
-            <a href="/progress_calendar_page" class="feature-button">
+            <a href="/calendar" class="feature-button">
                 <img src="{{ url_for('static', filename='img/カレンダー.jpg') }}" alt="カレンダー">
                 <h3>カレンダー</h3>
                 <p>進捗管理</p>
@@ -33,7 +41,7 @@
             </a>
         </div>
         <div class="feature">
-            <a href="/nutrition" class="feature-button">
+            <a href="/score" class="feature-button">
                 <img src="{{ url_for('static', filename='img/健康.png') }}" alt="栄養分析">
                 <h3>今日の一言</h3>
                 <p>頑張り具合を評価！</p>

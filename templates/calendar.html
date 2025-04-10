@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>進捗カレンダー</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
+</head>
+<body>
+  <h1 style="text-align: center;">📅 進捗カレンダー</h1>
+  <div id="calendar"></div>
+
+  <!-- ✅ モーダル -->
+  <div id="memoModal">
+    <div class="modal-content">
+      <h3 id="memoModalDate">📅 日付</h3>
+      <p id="memoModalPomodoro">ポモ回数: 0</p>
+      <textarea id="memoInput" rows="5" placeholder="やったこと、やることを入力..."></textarea>
+      <div class="modal-buttons">
+        <button onclick="saveMemo()">💾 保存</button>
+        <button onclick="closeModal()">✖ 閉じる</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+  <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+</body>
+</html>

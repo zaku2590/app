@@ -1,0 +1,65 @@
+#calendar {
+    max-width: 800px;
+    margin: 40px auto;
+  }
+  
+  .fc-event-title {
+    white-space: pre-wrap !important; /* メモで改行を表示 */
+  }
+  
+  /* モーダル全体 */
+  #memoModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+  }
+  
+  /* モーダル中身 */
+  .modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 400px;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  #memoInput {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    resize: vertical;
+    box-sizing: border-box;
+    font-size: 14px;
+    text-align: left; /* ← 左寄せ */
+  }  
+  
+  .modal-buttons {
+    margin-top: 10px;
+  }
+  
+  .modal-buttons button {
+    margin: 5px;
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-buttons button:first-child {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .modal-buttons button:last-child {
+    background-color: #f44336;
+    color: white;
+  }
+  
