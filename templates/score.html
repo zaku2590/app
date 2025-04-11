@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -13,20 +14,58 @@
     <button id="scoreButton">🧠 採点する</button>
 
     <div id="resultBox" style="display:none;">
-      <h3>採点結果</h3>
-      <p id="scoreResult">...</p>
+      <div id="scoreNumber"></div>
+      <div id="scoreComment"></div>
+      <a id="tweetButton" href="#" target="_blank" style="display: none;">
+        <button>🐦 X（Twitter）で共有</button>
+      </a>
     </div>
   </div>
 
   <script>
-    document.getElementById("scoreButton").addEventListener("click", () => {
-      fetch("/score_today")
-        .then(res => res.json())
-        .then(data => {
-          document.getElementById("resultBox").style.display = "block";
-          document.getElementById("scoreResult").textContent = data.result;
-        });
+  
+document.getElementById("scoreButton").addEventListener("click", () => {
+  fetch("/score_today")
+    .then(res => res.json())
+    .then(data => {
+      const result = data.result;
+      const scoreMatch = result.match(/評価：([A-Z]+)/);
+      const commentMatch = result.match(/コメント：(.+)/);
+
+      const score = scoreMatch ? scoreMatch[1] : "？";
+      const comment = commentMatch ? commentMatch[1] : "コメントなし";
+
+      const scoreElem = document.getElementById("scoreNumber");
+      const commentElem = document.getElementById("scoreComment");
+      const tweetButton = document.getElementById("tweetButton");
+
+      // スコアとコメントをセット
+      scoreElem.textContent = score;
+      commentElem.textContent = comment;
+
+      // クラス設定（リセット→再設定）
+      scoreElem.className = "";
+      scoreElem.classList.add(score.toLowerCase());
+
+      // 表示とアニメーション
+      document.getElementById("resultBox").style.display = "block";
+      scoreElem.style.animation = "none";
+      void scoreElem.offsetWidth;
+      scoreElem.style.animation = "growScore 1s forwards";
+
+      commentElem.style.opacity = 0;
+      setTimeout(() => {
+        commentElem.style.opacity = 1;
+      }, 1000);
+
+      // Twitter共有リンク設定
+      const tweetText = `📊今日の評価：${score}！\n🧠AIから一言：${comment}\n#ぽもログ #すき間ジム`;
+      const tweetURL = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
+      tweetButton.href = tweetURL;
+      tweetButton.style.display = "inline-block";
     });
+});
+
   </script>
 </body>
 </html>

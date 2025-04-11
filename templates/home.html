@@ -2,29 +2,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>すき間ジム | スキマ時間で成長を</title>
+    <title>pomolog | スキマ時間で成長を</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
     <div class="header-container">
-        <div class="logo">すき間ジム</div>
-
-        {% if user %}
-          <div class="welcome">こんにちは、{{ user }}さん</div>
-          <a href="/logout" class="logout-button">ログアウト</a>
-        {% else %}
-          <a href="/login" class="login-button">ログイン</a>
-        {% endif %}
+        <div class="logo">ぽもログ</div>
 
         {% if session.twitter_user %}
-          <div class="welcome">こんにちは、@{{ session.twitter_user }} さん</div>
-          <a href="/logout" class="logout-button">ログアウト</a>
+            <div class="welcome-logout">
+                <div class="welcome">こんにちは、@{{ session.twitter_user }} さん</div>
+                <a href="/logout" class="logout-button">ログアウト</a>
+            </div>
+
+        {% elif user %}
+            <div class="welcome-logout">
+                <div class="welcome">こんにちは、{{ user }} さん</div>
+                <a href="/logout" class="logout-button">ログアウト</a>
+            </div>
+
         {% else %}
-          <a href="/login/twitter" class="login-button">Xでログイン</a>
+            <div class="login-buttons">
+                <a href="/login" class="login-button">ログイン</a>
+                <a href="/login/twitter" class="login-button">Xでログイン</a>
+            </div>
         {% endif %}
     </div>
 
     <div class="main-visual">ぽもログ、あなたの“ちょっとずつ”を応援します</div>
+
     <div class="features">
         <div class="feature">
             <a href="/calendar" class="feature-button">
@@ -55,6 +61,7 @@
             </a>
         </div>
     </div>
-    <div class="footer">&copy; 2025 すき間ジム | All Rights Reserved</div>
+
+    <div class="footer">&copy; 2025 pomolog | All Rights Reserved</div>
 </body>
 </html>

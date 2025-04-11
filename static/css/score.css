@@ -1,49 +1,50 @@
-body {
-    font-family: "Noto Sans JP", sans-serif;
-    background: #E3F2FD;
-    text-align: center;
-    padding: 60px;
-    margin: 0;
-  }
-  
-  .container {
-    max-width: 600px;
-    margin: auto;
-    background: white;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  
-  h1 {
-    color: #1565C0;
-    margin-bottom: 30px;
-  }
-  
-  #score-button {
-    font-size: 1.2em;
-    padding: 15px 30px;
-    background: #2196F3;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-  
-  #score-button:hover {
-    background: #1976D2;
-  }
-  
-  #score-display {
-    font-size: 3em;
-    color: #0D47A1;
-    margin-top: 30px;
-  }
-  
-  #comment-display {
-    font-size: 1.3em;
-    color: #333;
-    margin-top: 10px;
-  }
-  
+
+#resultBox {
+  text-align: center;
+  margin-top: 30px;
+}
+
+#scoreNumber {
+  font-size: 0;
+  font-weight: bold;
+  margin-top: 20px;
+  animation: growScore 1s forwards;
+}
+
+#scoreComment {
+  margin-top: 10px;
+  font-size: 1.2em;
+  opacity: 0;
+  animation: fadeIn 1.5s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes growScore {
+  0%   { transform: scale(0); opacity: 0; }
+  50%  { transform: scale(1.5); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.sss {
+  color: gold;
+  text-shadow: 0 0 10px gold;
+  animation: shine 2s infinite;
+}
+
+@keyframes shine {
+  0% { text-shadow: 0 0 10px gold; }
+  50% { text-shadow: 0 0 20px white; }
+  100% { text-shadow: 0 0 10px gold; }
+}
+
+.ss  { color: royalblue; }
+.s   { color: limegreen; }
+.a   { color: orange; }
+.b   { color: orangered; }
+.c   { color: red; }
+.d   { color: gray; }

@@ -5,25 +5,45 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def generate_response_score(data):
-    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    count = data["count"]
+    memo = data["memo"]
 
+    # 回数に応じたランク
+    if count >= 15:
+        grade = "SSS"
+    elif count >= 12:
+        grade = "SS"
+    elif count >= 9:
+        grade = "S"
+    elif count >= 6:
+        grade = "A"
+    elif count >= 3:
+        grade = "B"
+    elif count >= 1:
+        grade = "C"
+    else:
+        grade = "D"
+
+    # コメントはOpenAIで優しい一言を生成
     prompt = f"""
-    以下はユーザーの今日の活動記録です。
+    今日のポモドーロ回数は {count} 回、以下のメモがありました：
+    「{memo}」
 
-    🔢 ポモドーロ回数: {data['count']} 回
-    📝 メモ内容: {data['memo']}
+    以下の評価ランクとメモに基づいて、ユーザーの努力を優しく応援してください：
 
-    この内容をもとに、以下のフォーマットで評価してください。
+    🔥 評価ランク: {grade}
 
+    フォーマット：
     コメント：◯◯◯
-    評価：S / A / B / C / D
+    評価：{grade}
     """
 
     try:
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         response = client.chat.completions.create(
             model="gpt-4o",
             messages=[
-                {"role": "system", "content": "あなたはやさしくユーザーの努力を採点するAIです。"},
+                {"role": "system", "content": "あなたはやさしくユーザーの努力を評価するAIです。"},
                 {"role": "user", "content": prompt}
             ]
         )
@@ -31,5 +51,4 @@ def generate_response_score(data):
 
     except Exception as e:
         return f"エラー: {str(e)}"
-
 
