@@ -14,5 +14,6 @@ class Progress(db.Model):
     date = db.Column(db.Date, nullable=False)
     count = db.Column(db.Integer, default=0) 
     memo = db.Column(db.Text) 
+    score_result = db.Column(db.Text)
 
 

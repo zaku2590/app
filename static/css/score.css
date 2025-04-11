@@ -1,50 +1,114 @@
+body {
+  background: #ffffff;
+  font-family: 'Arial', 'メイリオ', sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-#resultBox {
+.score-container {
   text-align: center;
-  margin-top: 30px;
+  padding-top: 60px;
 }
 
-#scoreNumber {
-  font-size: 0;
-  font-weight: bold;
-  margin-top: 20px;
-  animation: growScore 1s forwards;
+.score-area {
+  text-align: center;
+  margin-top: 40px;
+  position: relative;
 }
 
-#scoreComment {
-  margin-top: 10px;
+#scoreButton {
   font-size: 1.2em;
-  opacity: 0;
-  animation: fadeIn 1.5s forwards;
-  animation-delay: 1s;
+  padding: 10px 30px;
+  background: #ff69b4;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
 }
 
-@keyframes growScore {
+#scoreButton:hover {
+  background: #ff85c1;
+}
+
+.home-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  background: #ddd;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: #333;
+}
+
+.score-rank {
+  font-size: 8em;
+  font-weight: bold;
+  animation: popIn 1s forwards;
+  margin-bottom: 20px;
+}
+
+@keyframes popIn {
   0%   { transform: scale(0); opacity: 0; }
   50%  { transform: scale(1.5); opacity: 1; }
   100% { transform: scale(1); }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.sss {
-  color: gold;
-  text-shadow: 0 0 10px gold;
-  animation: shine 2s infinite;
-}
-
-@keyframes shine {
-  0% { text-shadow: 0 0 10px gold; }
-  50% { text-shadow: 0 0 20px white; }
-  100% { text-shadow: 0 0 10px gold; }
-}
-
+.sss { color: gold; text-shadow: 0 0 10px gold; }
 .ss  { color: royalblue; }
 .s   { color: limegreen; }
 .a   { color: orange; }
-.b   { color: orangered; }
-.c   { color: red; }
+.b   { color: coral; }
+.c   { color: crimson; }
 .d   { color: gray; }
+
+.speech-bubble {
+  position: relative;
+  display: inline-block;
+  padding: 20px;
+  background: #f0f8ff;
+  border-radius: 20px;
+  max-width: 80%;
+  font-size: 1.2em;
+  color: #333;
+  margin: 0 auto;
+  animation: fadeIn 1.5s forwards;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+}
+
+.speech-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  margin-left: -10px;
+  border: 10px solid transparent;
+  border-top-color: #f0f8ff;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.tweet-button-wrapper {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.tweet-button {
+  background: #f5f8fa;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #1da1f2;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tweet-button:hover {
+  background: #e1ecf4;
+}

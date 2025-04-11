@@ -191,11 +191,19 @@ def score_today():
     if not progress:
         return jsonify({"result": "今日はまだ記録がありません。"})
 
+    # すでに結果が保存されていればそれを返す
+    if progress.score_result:
+        return jsonify({"result": progress.score_result})
+
     data = {
         "count": progress.count,
         "memo": progress.memo or ""
     }
 
     result = generate_response_score(data)
-    print("🧠 GPTの返答:", result)
+
+    # 採点結果を保存
+    progress.score_result = result
+    db.session.commit()
+
     return jsonify({"result": result})

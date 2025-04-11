@@ -64,3 +64,29 @@ body {
   margin-top: 25px;
   font-size: 14px;
 }
+/* ▶ボタンが押されたときの状態 */
+.buttons #start.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e88e5;
+  font-weight: bold;
+  box-shadow: 0 0 10px white;
+  transform: scale(1.05);
+}
+
+.buttons #start.active:hover {
+  background: rgba(255, 255, 255, 1);
+}
+
+.home-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-weight: bold;
+  background: #ddd;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: #333;
+  z-index: 999;
+}

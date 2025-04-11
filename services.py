@@ -13,9 +13,9 @@ def generate_response_score(data):
         grade = "SSS"
     elif count >= 12:
         grade = "SS"
-    elif count >= 9:
+    elif count >= 8:
         grade = "S"
-    elif count >= 6:
+    elif count >= 5:
         grade = "A"
     elif count >= 3:
         grade = "B"

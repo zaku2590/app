@@ -25,16 +25,11 @@ function switchMode() {
     pomodoroCount++;
     countDisplay.textContent = `現在 ${pomodoroCount} ポモドーロ`;
 
-    // ✅ 自動で進捗を記録する
+    // ✅ ポモ回数をサーバーに送信
     fetch("/record_progress", { method: "POST" })
       .then(res => res.json())
       .then(data => {
-        console.log("記録:", data);
-        alert(`✅ 作業完了！\n${data.message}（${data.count}回目）`);
-      })
-      .catch(err => {
-        console.error("記録エラー:", err);
-        alert("⚠️ 記録に失敗しました。ログインしているか確認してください。");
+        console.log("✅ 記録:", data);
       });
   }
 
@@ -45,7 +40,12 @@ function switchMode() {
 
 function startTimer() {
   if (isRunning) return;
+
   isRunning = true;
+
+  startButton.classList.add("active");
+  startButton.textContent = "⏳";
+
   timerInterval = setInterval(() => {
     if (currentTime > 0) {
       currentTime--;
@@ -54,7 +54,7 @@ function startTimer() {
       clearInterval(timerInterval);
       isRunning = false;
       switchMode();
-      startTimer();
+      startTimer(); // 自動で次のモードへ
     }
   }, 1000);
 }
@@ -62,6 +62,9 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timerInterval);
   isRunning = false;
+
+  startButton.classList.remove("active");
+  startButton.textContent = "▶";
 }
 
 function resetTimer() {
