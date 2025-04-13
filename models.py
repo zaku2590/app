@@ -7,6 +7,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.Text, nullable=False)
+    is_public = db.Column(db.Boolean, default=True)
     
 class Progress(db.Model):
     id = db.Column(db.Integer, primary_key=True)

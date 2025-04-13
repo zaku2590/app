@@ -7,11 +7,27 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
 </head>
 <body>
+  <!-- 🏠 ホームボタン -->
   <a href="/" class="home-button">🏠 ホーム</a>
+
   <h1 style="text-align: center;">📅 進捗カレンダー</h1>
+
+  <!-- 🔍 ユーザー検索フォーム -->
+  <div style="text-align:center; margin: 10px;">
+    <input type="text" id="userSearchInput" placeholder="ユーザー名を検索">
+    <button id="userSearchButton" onclick="loadCalendarForUser()">🔍 検索</button>
+    <button id="resetCalendarButton" style="display:none; margin-left:10px;">↩ 自分のカレンダーに戻る</button>
+  </div>
+
+  <!-- 🔒 公開設定 -->
+  <div style="text-align: center; margin: 10px;">
+    <button id="toggleVisibilityBtn">🔒 状態取得中...</button>
+  </div>
+
+  <!-- 📅 カレンダー本体 -->
   <div id="calendar"></div>
 
-  <!-- ✅ モーダル -->
+  <!-- ✅ モーダル（メモ編集） -->
   <div id="memoModal">
     <div class="modal-content">
       <h3 id="memoModalDate">📅 日付</h3>
@@ -24,6 +40,7 @@
     </div>
   </div>
 
+  <!-- 📚 スクリプト読み込み -->
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
   <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
 </body>

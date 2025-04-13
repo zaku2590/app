@@ -3,7 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 from datetime import date, datetime
 from app.models import db, User, Progress
-from app.services import generate_response_score
+from app.services import generate_response_score, get_logged_in_user
 
 main_bp = Blueprint("main", __name__)
 
@@ -125,30 +125,50 @@ def get_progress_count():
 
 @main_bp.route("/get_progress_calendar", methods=["GET"])
 def get_progress_calendar():
-    username = session.get("twitter_user") or session.get("user")
-    if not username:
+    username = request.args.get("username")
+
+    if username:
+        user = User.query.filter_by(username=username).first()
+        if not user or not user.is_public:
+            return jsonify([])
+    elif "twitter_user" in session or "user" in session:
+        uname = session.get("twitter_user") or session.get("user")
+        user = User.query.filter_by(username=uname).first()
+    else:
         return jsonify([])
 
-    user = User.query.filter_by(username=username).first()
+    import re
     records = Progress.query.filter_by(user_id=user.id).all()
-
     event_list = []
+
     for r in records:
+        title = ""
         if r.count > 0:
+            title += f"{r.count}ポモ"
+        if r.score_result:
+            match = re.search(r"評価[:：]\s*([A-Z]{1,3})", r.score_result)
+            if match:
+                rank = match.group(1)
+                title += f"（評価:{rank}）" if title else f"評価:{rank}"
+
+        if title:  # ← titleがあればイベントとして追加
             event_list.append({
-                "title": f"     {r.count}ポモ",
-                "start": r.date.isoformat()
+                "title": title,
+                "start": r.date.isoformat()[:10]  # ← 必ず YYYY-MM-DD にする
             })
 
     return jsonify(event_list)
 
 @main_bp.route("/get_memo", methods=["GET"])
 def get_memo():
-    username = session.get("twitter_user") or session.get("user")
+    username = request.args.get("username") or session.get("twitter_user") or session.get("user")
     if not username:
         return jsonify({"memo": "", "count": 0})
 
     user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"memo": "", "count": 0})
+
     date_str = request.args.get("date")
     target_date = datetime.strptime(date_str, "%Y-%m-%d").date()
 
@@ -207,3 +227,19 @@ def score_today():
     db.session.commit()
 
     return jsonify({"result": result})
+
+@main_bp.route("/get_visibility_status", methods=["GET"])
+def get_visibility_status():
+    user = get_logged_in_user()
+    if not user:
+        return jsonify({"is_public": False})
+    return jsonify({"is_public": user.is_public})
+
+@main_bp.route("/toggle_calendar_visibility", methods=["POST"])
+def toggle_calendar_visibility():
+    user = get_logged_in_user()
+    if not user:
+        return jsonify({"message": "ログインが必要です"}), 401
+    user.is_public = not user.is_public
+    db.session.commit()
+    return jsonify({"is_public": user.is_public})

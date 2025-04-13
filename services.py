@@ -1,6 +1,8 @@
 import os
+from flask import session
 from openai import OpenAI
 from dotenv import load_dotenv
+from app.models import db, User
 
 load_dotenv()
 
@@ -51,4 +53,10 @@ def generate_response_score(data):
 
     except Exception as e:
         return f"エラー: {str(e)}"
+
+def get_logged_in_user():
+    username = session.get("twitter_user") or session.get("user")
+    if not username:
+        return None
+    return User.query.filter_by(username=username).first()
 

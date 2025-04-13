@@ -1,79 +1,140 @@
-#calendar {
-    max-width: 800px;
-    margin: 40px auto;
-  }
-  
-  .fc-event-title {
-    white-space: pre-wrap !important; /* メモで改行を表示 */
-  }
-  
-  /* モーダル全体 */
-  #memoModal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 1000;
-  }
-  
-  /* モーダル中身 */
-  .modal-content {
-    background: #fff;
-    width: 90%;
-    max-width: 400px;
-    margin: 10% auto;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-  }
-  
-  #memoInput {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    resize: vertical;
-    box-sizing: border-box;
-    font-size: 14px;
-    text-align: left; /* ← 左寄せ */
-  }  
-  
-  .modal-buttons {
-    margin-top: 10px;
-  }
-  
-  .modal-buttons button {
-    margin: 5px;
-    padding: 8px 16px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .modal-buttons button:first-child {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
-  .modal-buttons button:last-child {
-    background-color: #f44336;
-    color: white;
-  }
+body {
+  background-color: #E3F2FD;
+  font-family: "Noto Sans JP", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-  .home-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 1.2em;
-    text-decoration: none;
-    font-weight: bold;
-    background: #ddd;
-    padding: 6px 12px;
-    border-radius: 10px;
-    color: #333;
-    z-index: 999;
-  }
-  
+#calendar {
+  max-width: 800px;
+  margin: 40px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 検索フォーム */
+#userSearchInput {
+  padding: 10px;
+  font-size: 18px;
+  width: 250px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* 検索・戻るボタン */
+#userSearchButton,
+#resetCalendarButton {
+  padding: 10px 16px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+#userSearchButton:hover,
+#resetCalendarButton:hover {
+  background-color: #45a049;
+}
+
+/* 公開・非公開ボタン */
+#toggleVisibilityBtn {
+  padding: 10px 20px;
+  font-size: 1em;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#toggleVisibilityBtn.btn-public {
+  background-color: #2196F3 !important;
+}
+
+#toggleVisibilityBtn.btn-private {
+  background-color: #f44336 !important;
+}
+
+/* ホームボタン */
+.home-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-weight: bold;
+  background: #ddd;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: #333;
+  z-index: 999;
+}
+
+/* モーダル */
+#memoModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 400px;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#memoInput {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-size: 14px;
+  text-align: left;
+}
+
+.modal-buttons {
+  margin-top: 10px;
+}
+
+.modal-buttons button {
+  margin: 5px;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ✅ FullCalendarイベント表示調整 */
+.fc-event {
+  background-color: white !important;
+  border: 1px solid #ccc !important;
+  border-radius: 4px;
+  display: block !important;
+  padding: 2px 4px;
+  overflow: visible !important;
+  min-height: 24px;
+}
+
+/* ✅ ポモ回数＋評価のテキストスタイル */
+.fc-event-title {
+  color: black !important;
+  font-weight: bold;
+  font-size: 0.9em;
+  white-space: pre-wrap !important;  /* 改行表示 */
+}
