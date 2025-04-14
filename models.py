@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, UTC
 
 db = SQLAlchemy()
 
@@ -16,5 +16,10 @@ class Progress(db.Model):
     count = db.Column(db.Integer, default=0) 
     memo = db.Column(db.Text) 
     score_result = db.Column(db.Text)
-
+    
+class BlogPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
 

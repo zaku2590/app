@@ -1,11 +1,25 @@
 from flask import Blueprint, render_template, request, jsonify, session, redirect, url_for, current_app
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import tempfile
 from datetime import date, datetime
-from app.models import db, User, Progress
+from app.models import db, User, Progress, BlogPost
 from app.services import generate_response_score, get_logged_in_user
+import uuid
+from werkzeug.utils import secure_filename
+from supabase import create_client
 
 main_bp = Blueprint("main", __name__)
+
+UPLOAD_FOLDER = os.path.join("static", "uploads")
+
+# .env から情報取得
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_KEY")
+supabase = create_client(
+    os.getenv("SUPABASE_URL"),
+    os.getenv("SUPABASE_SERVICE_KEY")
+)
 
 @main_bp.route("/", methods=["GET"])
 def home_page():
@@ -243,3 +257,84 @@ def toggle_calendar_visibility():
     user.is_public = not user.is_public
     db.session.commit()
     return jsonify({"is_public": user.is_public})
+
+@main_bp.route("/blog")
+def blog_list():
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    username = session.get("twitter_user") or session.get("user")
+    is_admin = username == "admin"
+    return render_template("blog.html", posts=posts, is_admin=is_admin)
+
+@main_bp.route("/blog/<int:post_id>")
+def blog_detail(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    return render_template("blog_detail.html", post=post)
+
+@main_bp.route("/blog/new", methods=["GET", "POST"])
+def blog_create():
+    username = session.get("twitter_user") or session.get("user")
+    if username != "admin":
+        return "許可されていません", 403
+
+    if request.method == "POST":
+        title = request.form.get("title")
+        content = request.form.get("content")
+        new_post = BlogPost(title=title, content=content)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect("/blog")
+
+    return render_template("blog_new.html")
+
+@main_bp.route("/blog/<int:post_id>/edit", methods=["GET", "POST"])
+def blog_edit(post_id):
+    if session.get("user") != "admin" and session.get("twitter_user") != "admin":
+        return "許可されていません", 403
+
+    post = BlogPost.query.get_or_404(post_id)
+
+    if request.method == "POST":
+        post.title = request.form.get("title")
+        post.content = request.form.get("content")
+        db.session.commit()
+        return redirect(f"/blog/{post.id}")
+
+    return render_template("blog_edit.html", post=post)
+
+@main_bp.route("/blog/<int:post_id>/delete", methods=["POST"])
+def blog_delete(post_id):
+    if session.get("user") != "admin" and session.get("twitter_user") != "admin":
+        return "許可されていません", 403
+
+    post = BlogPost.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect("/blog")
+
+@main_bp.route("/upload_image", methods=["POST"])
+def upload_image():
+    file = request.files.get("image")
+    if not file or file.filename == '':
+        print("❌ ファイルが空または存在しない")
+        return jsonify({"error": "画像が見つかりません"}), 400
+
+    print("✅ ファイル受け取り成功:", file.filename)
+
+    filename = secure_filename(str(uuid.uuid4()) + "_" + file.filename)
+
+    try:
+        # 一時ファイルに保存
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            file.save(tmp.name)
+            supabase.storage.from_("blog-images").upload(filename, tmp.name, {
+                "content-type": file.content_type
+            })
+        os.remove(tmp.name)  # 一時ファイルを削除
+
+        public_url = supabase.storage.from_("blog-images").get_public_url(filename)
+        print("✅ アップロード成功:", public_url)
+        return jsonify({"success": 1, "file": {"url": public_url}})
+    
+    except Exception as e:
+        print("❌ Supabaseへのアップロード失敗:", str(e))
+        return jsonify({"error": str(e)}), 500

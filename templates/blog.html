@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ブログ一覧 | ぽもログ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+</head>
+<body>
+  <a href="/" class="home-button">🏠 ホーム</a>
+
+  <section class="header">
+    <h1>📝 ブログ一覧</h1>
+    <p>人生を豊かにするヒントを5分で</p>
+
+    {% if is_admin %}
+      <div style="margin-top: 20px;">
+        <a href="/blog/new">
+          <button style="padding: 10px 20px; font-size: 16px;">＋ 新規投稿</button>
+        </a>
+      </div>
+    {% endif %}
+  </section>
+
+  <div class="blog-grid">
+    {% for post in posts %}
+      <a href="{{ url_for('main.blog_detail', post_id=post.id) }}" class="blog-card-link">
+        <div class="blog-card">
+          <div class="card-tag">ブログ</div>
+          <h2 class="card-title">{{ post.title }}</h2>
+          <p class="card-date">📅 {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+        </div>
+      </a>
+    {% else %}
+      <p>投稿がまだありません。</p>
+    {% endfor %}
+  </div>
+</body>
+</html>

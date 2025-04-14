@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ post.title }} | ぽもログ</title>
+</head>
+<body>
+  <a href="/blog">← 一覧に戻る</a>
+
+  {% if session.get('user') == 'admin' or session.get('twitter_user') == 'admin' %}
+    <div style="margin: 20px 0;">
+      <a href="/blog/{{ post.id }}/edit">
+        <button style="padding: 6px 14px;">✏️ 編集</button>
+      </a>
+      <form action="/blog/{{ post.id }}/delete" method="POST" style="display:inline;" onsubmit="return confirm('本当に削除しますか？');">
+        <button type="submit" style="padding: 6px 14px; background-color: crimson; color: white;">🗑 削除</button>
+      </form>
+    </div>
+  {% endif %}
+
+  <div style="max-width: 700px; margin: 40px auto; font-family: 'Noto Sans JP', sans-serif;">
+    <h1>{{ post.title }}</h1>
+    <p style="color: gray;">投稿日: {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+    <hr>
+    <p style="white-space: pre-wrap;">{{ post.content|safe }}</p>
+  </div>
+</body>
+</html>
