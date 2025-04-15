@@ -143,13 +143,15 @@ def get_progress_calendar():
 
     if username:
         user = User.query.filter_by(username=username).first()
-        if not user or not user.is_public:
-            return jsonify([])
+        if not user:
+            return jsonify({"error": "ユーザーが見つかりません"}), 404
+        if not user.is_public:
+            return jsonify({"error": "このユーザーのカレンダーは非公開です"}), 403
     elif "twitter_user" in session or "user" in session:
         uname = session.get("twitter_user") or session.get("user")
         user = User.query.filter_by(username=uname).first()
     else:
-        return jsonify([])
+        return jsonify({"error": "ログインしていません"}), 401
 
     import re
     records = Progress.query.filter_by(user_id=user.id).all()
@@ -165,10 +167,10 @@ def get_progress_calendar():
                 rank = match.group(1)
                 title += f"（評価:{rank}）" if title else f"評価:{rank}"
 
-        if title:  # ← titleがあればイベントとして追加
+        if title:
             event_list.append({
                 "title": title,
-                "start": r.date.isoformat()[:10]  # ← 必ず YYYY-MM-DD にする
+                "start": r.date.isoformat()[:10]
             })
 
     return jsonify(event_list)

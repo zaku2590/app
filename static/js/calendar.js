@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const toggleBtn = document.getElementById('toggleVisibilityBtn');
   const userSearchInput = document.getElementById('userSearchInput');
   const resetCalendarButton = document.getElementById('resetCalendarButton');
+  const errorBox = document.getElementById("searchError");
 
   let calendar = null;
 
@@ -39,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   function renderCalendar(events, readOnly = false, username = null) {
-    if (calendar) calendar.destroy(); // 🔁 前回のカレンダーを破棄
+    if (calendar) calendar.destroy();
 
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
@@ -63,7 +64,6 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch("/get_progress_calendar")
     .then(res => res.json())
     .then(events => {
-      console.log("📅 自分のイベント一覧:", events);
       renderCalendar(events, false);
     });
 
@@ -71,27 +71,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function loadCalendarForUser() {
     const username = userSearchInput.value.trim();
+    errorBox.textContent = "";
+
     if (!username) return;
 
     fetch(`/get_progress_calendar?username=${username}`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          return res.json().then(err => {
+            throw new Error(err.error || "エラーが発生しました");
+          });
+        }
+        return res.json();
+      })
       .then(events => {
-        console.log("🔍 他人のイベント一覧:", events);
         renderCalendar(events, true, username);
         resetCalendarButton.style.display = "inline-block";
-        toggleBtn.style.display = "none"; // 他人の時は非表示
+        toggleBtn.style.display = "none";
+      })
+      .catch(error => {
+        errorBox.textContent = "❌ " + error.message;
       });
   }
 
   resetCalendarButton.addEventListener("click", () => {
     userSearchInput.value = "";
+    errorBox.textContent = "";
     resetCalendarButton.style.display = "none";
 
     fetch("/get_progress_calendar")
       .then(res => res.json())
       .then(events => {
         renderCalendar(events, false);
-        toggleBtn.style.display = "inline-block"; // 自分に戻ると表示
+        toggleBtn.style.display = "inline-block";
       });
   });
 });
@@ -114,9 +126,7 @@ function openModal(dateStr, currentCount, currentMemo, readOnly = false) {
       <button onclick="closeModal()">✖ 閉じる</button>
     `;
   } else {
-    buttons.innerHTML = `
-      <button onclick="closeModal()">✖ 閉じる</button>
-    `;
+    buttons.innerHTML = `<button onclick="closeModal()">✖ 閉じる</button>`;
   }
 
   document.getElementById("memoModal").style.display = "block";
@@ -130,9 +140,7 @@ function saveMemo() {
   const memoText = document.getElementById("memoInput").value;
   fetch("/save_memo", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       date: selectedDate,
       memo: memoText
