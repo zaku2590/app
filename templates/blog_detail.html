@@ -2,10 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_edit.css') }}">
   <title>{{ post.title }} | ぽもログ</title>
 </head>
 <body>
-  <a href="/blog">← 一覧に戻る</a>
+  <a href="/blog" class="list-button">← 一覧に戻る</a>
 
   {% if session.get('user') == 'admin' or session.get('twitter_user') == 'admin' %}
     <div style="margin: 20px 0;">

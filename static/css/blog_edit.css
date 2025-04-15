@@ -45,3 +45,17 @@ button {
   max-width: 100%;
   height: auto;
 }
+
+.list-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-weight: bold;
+  background: #ddd;
+  padding: 6px 12px;
+  border-radius: 10px;
+  color: #333;
+  z-index: 999;
+}

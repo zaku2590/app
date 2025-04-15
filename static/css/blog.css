@@ -1,6 +1,6 @@
 body {
   font-family: "Noto Sans JP", sans-serif;
-  background-color: #E3F2FD; /* 他画面と統一 */
+  background-color: #E3F2FD;
   margin: 0;
   padding: 40px;
   color: #333;
@@ -9,63 +9,6 @@ body {
 .header {
   text-align: center;
   margin-bottom: 30px;
-}
-
-.blog-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
-  max-width: 1000px;
-  margin: 40px auto;
-}
-
-.blog-card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-
-.blog-card:hover {
-  transform: translateY(-5px);
-}
-
-.card-tag {
-  background: #e3f2fd;
-  color: #1976d2;
-  font-size: 12px;
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 6px;
-  margin-bottom: 10px;
-}
-
-.card-title {
-  font-size: 20px;
-  margin: 0;
-}
-
-.card-snippet {
-  color: #555;
-  font-size: 14px;
-  margin-top: 10px;
-}
-
-.card-date {
-  font-size: 12px;
-  color: #999;
-  margin-top: 15px;
-}
-
-.blog-card-link {
-  text-decoration: none;
-  color: inherit;
-}
-
-.blog-card-link:hover .blog-card {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 .home-button {
@@ -82,43 +25,79 @@ body {
   z-index: 999;
 }
 
-.container {
-  max-width: 800px;
-  margin: auto;
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 40px auto;
+  align-items: stretch;
+}
+
+.blog-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.blog-card {
   background: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.ql-editor {
-  min-height: 300px;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 1.2em;
-  margin-bottom: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 1em;
-  background-color: #2196F3;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-.blog-content {
-  text-align: center;
-}
-
-.blog-content img {
-  display: block !important;
-  margin: 1.5em auto !important;
+  transition: transform 0.2s;
+  height: 100%;
   max-width: 100%;
-  height: auto;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.blog-card img {
+  height: 180px;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.card-tag {
+  background: #e3f2fd;
+  color: #1976d2;
+  font-size: 12px;
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 18px;
+  margin: 0;
+  min-height: 3em;
+  line-height: 1.5;
+
+  display: -webkit-box;
+  display: box;                     /* 標準構文（今は一部対応のみ） */
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+  line-clamp: 2;                    /* 標準構文（今後の互換性用） */
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-date {
+  font-size: 12px;
+  color: #999;
+  margin-top: auto;
 }
