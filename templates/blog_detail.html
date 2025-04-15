@@ -20,9 +20,11 @@
 
   <div style="max-width: 700px; margin: 40px auto; font-family: 'Noto Sans JP', sans-serif;">
     <h1>{{ post.title }}</h1>
-    <p style="color: gray;">投稿日: {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+    <p style="color: gray;">更新日: {{ post.updated_at.strftime('%Y-%m-%d') }}</p>
     <hr>
-    <p style="white-space: pre-wrap;">{{ post.content|safe }}</p>
+    <div class="blog-content" style="white-space: pre-wrap;">
+      {{ post.content|safe }}
+    </div>
   </div>
 </body>
 </html>

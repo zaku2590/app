@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ブログ一覧 | ぽもログ</title>
+  <title>📝 ブログ一覧 | ぽもログ</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
 </head>
 <body>
@@ -25,9 +25,12 @@
     {% for post in posts %}
       <a href="{{ url_for('main.blog_detail', post_id=post.id) }}" class="blog-card-link">
         <div class="blog-card">
+          {% if post.image_url %}
+            <img src="{{ post.image_url }}" alt="画像" style="width: 100%; border-radius: 8px; margin-bottom: 10px;">
+          {% endif %}
           <div class="card-tag">ブログ</div>
           <h2 class="card-title">{{ post.title }}</h2>
-          <p class="card-date">📅 {{ post.created_at.strftime('%Y-%m-%d') }}</p>
+          <p class="card-date">📅 {{ post.updated_at.strftime('%Y-%m-%d') }}</p>
         </div>
       </a>
     {% else %}

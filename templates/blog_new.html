@@ -9,8 +9,9 @@
 <body>
   <div class="container">
     <h1>📝 新しいブログを書く</h1>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
       <input type="text" name="title" placeholder="タイトル" required>
+      <input type="file" name="image" accept="image/*" required>
       <input type="hidden" name="content" id="hidden-content">
       <div id="editor" style="min-height: 300px;"></div>
       <br>
