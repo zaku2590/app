@@ -270,7 +270,8 @@ def blog_list():
 @main_bp.route("/blog/<int:post_id>")
 def blog_detail(post_id):
     post = BlogPost.query.get_or_404(post_id)
-    return render_template("blog_detail.html", post=post)
+    recent_posts = BlogPost.query.order_by(BlogPost.updated_at.desc()).limit(15)
+    return render_template("blog_detail.html", post=post, recent_posts=recent_posts)
 
 @main_bp.route("/blog/new", methods=["GET", "POST"])
 def blog_new():

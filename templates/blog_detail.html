@@ -2,11 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_edit.css') }}">
   <title>{{ post.title }} | ぽもログ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog_detail.css') }}">
 </head>
 <body>
-  <a href="/blog" class="list-button">← 一覧に戻る</a>
+  <a href="/blog" class="list-button">← ブログ一覧へ</a>
 
   {% if session.get('user') == 'admin' or session.get('twitter_user') == 'admin' %}
     <div style="margin: 20px 0;">
@@ -19,12 +19,27 @@
     </div>
   {% endif %}
 
-  <div style="max-width: 700px; margin: 40px auto; font-family: 'Noto Sans JP', sans-serif;">
-    <h1>{{ post.title }}</h1>
-    <p style="color: gray;">更新日: {{ post.updated_at.strftime('%Y-%m-%d') }}</p>
-    <hr>
-    <div class="blog-content" style="white-space: pre-wrap;">
-      {{ post.content|safe }}
+  <div class="detail-container">
+    <div class="main-content">
+      <h1>{{ post.title }}</h1>
+      <p class="date">更新日: {{ post.updated_at.strftime('%Y-%m-%d') }}</p>
+      <hr>
+      <div class="blog-content">{{ post.content|safe }}</div>
+    </div>
+
+    <div class="sidebar">
+      <h3>🗂 最近の投稿</h3>
+      {% for recent in recent_posts %}
+        <a href="{{ url_for('main.blog_detail', post_id=recent.id) }}" class="blog-card-link">
+          <div class="blog-card">
+            {% if recent.image_url %}
+              <img src="{{ recent.image_url }}" alt="画像">
+            {% endif %}
+            <h4 class="card-title">{{ recent.title }}</h4>
+            <p class="card-date">📅 {{ recent.updated_at.strftime('%Y-%m-%d') }}</p>
+          </div>
+        </a>
+      {% endfor %}
     </div>
   </div>
 </body>
