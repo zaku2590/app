@@ -165,7 +165,7 @@ def get_progress_calendar():
             match = re.search(r"評価[:：]\s*([A-Z]{1,3})", r.score_result)
             if match:
                 rank = match.group(1)
-                title += f"（評価:{rank}）" if title else f"評価:{rank}"
+                title += f"(評価:{rank})" if title else f"評価:{rank}"
 
         if title:
             event_list.append({

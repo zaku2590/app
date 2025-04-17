@@ -113,7 +113,7 @@ let selectedDate = null;
 function openModal(dateStr, currentCount, currentMemo, readOnly = false) {
   selectedDate = dateStr;
   document.getElementById("memoModalDate").textContent = `📅 ${dateStr}`;
-  document.getElementById("memoModalPomodoro").textContent = `ポモ回数: ${currentCount}`;
+  document.getElementById("memoModalPomodoro").textContent = `ポモ回数:${currentCount}`;
   document.getElementById("memoInput").value = currentMemo || "";
   document.getElementById("memoInput").readOnly = readOnly;
 

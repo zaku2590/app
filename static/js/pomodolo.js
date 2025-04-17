@@ -25,7 +25,6 @@ function switchMode() {
     pomodoroCount++;
     countDisplay.textContent = `現在 ${pomodoroCount} ポモドーロ`;
 
-    // ✅ ポモ回数をサーバーに送信
     fetch("/record_progress", { method: "POST" })
       .then(res => res.json())
       .then(data => {
@@ -54,7 +53,7 @@ function startTimer() {
       clearInterval(timerInterval);
       isRunning = false;
       switchMode();
-      startTimer(); // 自動で次のモードへ
+      startTimer();
     }
   }, 1000);
 }
