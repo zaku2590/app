@@ -45,7 +45,12 @@ def register_user():
     hashed_pw = generate_password_hash(password)
     new_user = User(username=username, password=hashed_pw)
     db.session.add(new_user)
-    db.session.commit()
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return "⚠️ ユーザー登録中にエラーが発生しました。"
 
     session.pop("twitter_user", None)
     session["user"] = username
@@ -122,7 +127,12 @@ def record_progress():
     else:
         progress.count += 1
 
-    db.session.commit()
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "保存に失敗しました"}), 500
+
     return jsonify({"message": "記録しました", "count": progress.count})
 
 @main_bp.route("/get_progress_count", methods=["GET"])
@@ -210,7 +220,12 @@ def save_memo():
 
     progress.memo = data["memo"]
     db.session.add(progress)
-    db.session.commit()
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"message": "保存に失敗しました"}), 500
 
     return jsonify({"message": "保存しました！"})
 
@@ -227,7 +242,6 @@ def score_today():
     if not progress:
         return jsonify({"result": "今日はまだ記録がありません。"})
 
-    # すでに結果が保存されていればそれを返す
     if progress.score_result:
         return jsonify({"result": progress.score_result})
 
@@ -237,10 +251,13 @@ def score_today():
     }
 
     result = generate_response_score(data)
-
-    # 採点結果を保存
     progress.score_result = result
-    db.session.commit()
+
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"result": "採点保存に失敗しました。"}), 500
 
     return jsonify({"result": result})
 
