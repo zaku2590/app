@@ -3,11 +3,17 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  min-height: 100vh;
 }
 
 #calendar {
   max-width: 800px;
-  margin: 40px auto;
+  width: 95%;
+  margin-top: 20px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -16,7 +22,7 @@ body {
 
 /* 検索フォーム */
 #userSearchInput {
-  padding: 10px;
+  padding: 20px;
   font-size: 18px;
   width: 250px;
   border-radius: 8px;
@@ -26,7 +32,7 @@ body {
 /* 検索・戻るボタン */
 #userSearchButton,
 #resetCalendarButton {
-  padding: 10px 16px;
+  padding: 16px 32px;
   font-size: 18px;
   border: none;
   border-radius: 8px;
@@ -43,7 +49,7 @@ body {
 
 /* 公開・非公開ボタン */
 #toggleVisibilityBtn {
-  padding: 10px 20px;
+  padding: 15px 30px;
   font-size: 1em;
   color: white;
   border: none;
@@ -69,7 +75,7 @@ body {
   text-decoration: none;
   font-weight: bold;
   background: #ddd;
-  padding: 6px 12px;
+  padding: 15px 30px;
   border-radius: 10px;
   color: #333;
   z-index: 999;
@@ -136,5 +142,5 @@ body {
   color: black !important;
   font-weight: bold;
   font-size: 0.9em;
-  white-space: pre-wrap !important;  /* 改行表示 */
+  white-space: pre-wrap !important;
 }

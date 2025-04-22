@@ -99,3 +99,17 @@ h2 {
     margin: 0 auto; /* 中央揃え */
     transition: background-color 0.3s ease;
 }
+/* ホームボタン */
+.home-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-size: 1.2em;
+    text-decoration: none;
+    font-weight: bold;
+    background: #ddd;
+    padding: 15px 30px;
+    border-radius: 10px;
+    color: #333;
+    z-index: 999;
+  }
