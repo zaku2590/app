@@ -62,7 +62,7 @@ def login_page():
 
 @main_bp.route("/login/twitter")
 def login_twitter():
-    redirect_uri = url_for("main.twitter_callback", _external=True)
+    redirect_uri = "https://pomolog.net/login/callback"
     return current_app.twitter.authorize_redirect(redirect_uri)
 
 @main_bp.route("/login/callback")
