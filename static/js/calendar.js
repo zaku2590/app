@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       events: events,
+      height: 'auto',
       dateClick: function (info) {
         const dateStr = info.dateStr;
         let url = `/get_memo?date=${dateStr}`;
@@ -120,16 +121,21 @@ function openModal(dateStr, currentCount, currentMemo, readOnly = false) {
   const buttons = document.querySelector(".modal-buttons");
   buttons.innerHTML = "";
 
+  const closeBtn = document.createElement("button");
+  closeBtn.textContent = "✖ 閉じる";
+  closeBtn.onclick = closeModal;
+
   if (!readOnly) {
-    buttons.innerHTML = `
-      <button onclick="saveMemo()">💾 保存</button>
-      <button onclick="closeModal()">✖ 閉じる</button>
-    `;
-  } else {
-    buttons.innerHTML = `<button onclick="closeModal()">✖ 閉じる</button>`;
+    const saveBtn = document.createElement("button");
+    saveBtn.textContent = "💾 保存";
+    saveBtn.onclick = saveMemo;
+    buttons.appendChild(saveBtn);
   }
 
-  document.getElementById("memoModal").style.display = "block";
+  buttons.appendChild(closeBtn);
+
+  const modal = document.getElementById("memoModal");
+  modal.style.display = "flex"; // ✅ モーダルを中央に表示（CSSで flex 中央化）
 }
 
 function closeModal() {
