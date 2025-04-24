@@ -26,9 +26,10 @@ def home_page():
     username = session.get("twitter_user") or session.get("user")
     return render_template("home.html", user=username)
 
-@main_bp.route("/score", methods=["GET"])
-def onephrase_page():
-    return render_template("score.html")
+@main_bp.route("/score")
+def score_page():
+    user = session.get("user") or session.get("twitter_user")
+    return render_template("score.html", is_logged_in=bool(user))
 
 @main_bp.route("/register", methods=["GET"])
 def register_page():

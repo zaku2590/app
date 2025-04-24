@@ -3,17 +3,19 @@ body {
     margin: 0;
     padding: 0;
     background-color: #E3F2FD;
-}
-.header {
+  }
+  
+  .header {
     background-color: #2196F3;
     color: rgb(10, 10, 10);
     text-align: center;
     padding: 30px;
     font-size: 48px;
-}
-.main-visual {
+  }
+  
+  .main-visual {
     width: 100%;
-    height: 100px; /* 高さを300pxから200pxに縮小 */
+    height: 100px;
     background: linear-gradient(135deg, #c0d6ea, #64B5F6);
     display: flex;
     align-items: center;
@@ -22,9 +24,10 @@ body {
     font-size: 28px;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    padding: 20px 0; /* 上下の余白を調整 */
-}
-.features {
+    padding: 20px 0;
+  }
+  
+  .features {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 40px;
@@ -33,20 +36,25 @@ body {
     max-width: 900px;
     margin: auto;
     text-align: center;
-}
-.feature {
+    box-sizing: border-box;
+  }
+  
+  .feature {
     padding: 20px;
     background: #f0f8ff;
     border-radius: 15px;
     border: 2px solid #2196F3;
     transition: transform 0.3s ease, background-color 0.3s ease;
-}
-.feature:hover {
+    box-sizing: border-box;
+  }
+  
+  .feature:hover {
     background-color: #2196F3;
     color: white;
     transform: scale(1.05);
-}
-.feature-button {
+  }
+  
+  .feature-button {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -56,45 +64,26 @@ body {
     padding: 20px;
     width: 100%;
     height: 100%;
-}
-.feature img {
+  }
+  
+  .feature img {
     width: 120px;
     height: 120px;
     margin-bottom: 15px;
-}
-.separator {
+  }
+  
+  .separator {
     display: none;
-}
-.footer {
+  }
+  
+  .footer {
     background-color: #1565C0;
     color: white;
     text-align: center;
     padding: 20px;
-}
-.features {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 40px;
-    padding: 60px;
-    background-color: white;
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-}
-/* スマホ（画面幅が768px以下）の場合 */
-@media (max-width: 768px) {
-    .features {
-        grid-template-columns: 1fr; /* 1列に変更 */
-        gap: 20px; /* スペース調整 */
-        padding: 30px;
-    }
-
-    .feature {
-        width: 90%;
-        margin: auto;
-    }
-}
-.header-container {
+  }
+  
+  .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -103,11 +92,13 @@ body {
     background-color: #f8f8f8;
     border-bottom: 1px solid #ddd;
     position: relative;
-}
-.logo {
+  }
+  
+  .logo {
     font-weight: bold;
-}
-.login-button {
+  }
+  
+  .login-button {
     font-size: 16px;
     padding: 8px 16px;
     background-color: #4CAF50;
@@ -115,18 +106,21 @@ body {
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
-}
-.login-button:hover {
+  }
+  
+  .login-button:hover {
     background-color: #45a049;
-}
-.welcome {
+  }
+  
+  .welcome {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
     font-size: 16px;
     color: #1565C0;
-}
-.logout-button {
+  }
+  
+  .logout-button {
     font-size: 16px;
     padding: 8px 16px;
     background-color: #f44336;
@@ -135,7 +129,23 @@ body {
     border-radius: 5px;
     margin-right: 10px;
     transition: background-color 0.3s ease;
-}
-.logout-button:hover {
+  }
+  
+  .logout-button:hover {
     background-color: #d32f2f;
-}
+  }
+  
+  /* ✅ スマホ（768px以下）で左右余白を均等に */
+  @media (max-width: 768px) {
+    .features {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 30px 20px;  /* ✅ 左右均等な余白 */
+    }
+  
+    .feature {
+      width: 100%;
+      margin: 0 auto;
+    }
+  }
+  

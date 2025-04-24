@@ -1,23 +1,3 @@
-window.addEventListener("DOMContentLoaded", () => {
-  fetch("/score_today")
-    .then(res => res.json())
-    .then(data => {
-      if (data.result && !data.result.includes("まだ記録がありません")) {
-        showScoreResult(data.result);
-        document.getElementById("scoreButton").style.display = "none";
-      }
-    });
-});
-
-document.getElementById("scoreButton").addEventListener("click", () => {
-  fetch("/score_today")
-    .then(res => res.json())
-    .then(data => {
-      showScoreResult(data.result);
-      document.getElementById("scoreButton").style.display = "none";
-    });
-});
-
 function showScoreResult(result) {
   const scoreMatch = result.match(/評価[:：]\s*([A-Z]+)/);
   const commentMatch = result.match(/コメント[:：]\s*(.+)/);
@@ -39,3 +19,36 @@ function showScoreResult(result) {
   tweetButton.href = tweetURL;
   tweetButton.style.display = "inline-block";
 }
+
+window.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn = (typeof IS_LOGGED_IN !== "undefined") && IS_LOGGED_IN === true;
+
+  const scoreButton = document.getElementById("scoreButton");
+
+  if (!isLoggedIn) {
+    // 未ログイン時はクリック時にアラートを表示
+    scoreButton.addEventListener("click", () => {
+      alert("採点にはログインが必要です。ログイン後に再度お試しください。");
+    });
+    return;
+  }
+
+  // ログイン済み：過去のスコアがあるかチェック
+  fetch("/score_today")
+    .then(res => res.json())
+    .then(data => {
+      if (data.result && !data.result.includes("まだ記録がありません")) {
+        showScoreResult(data.result);
+        scoreButton.style.display = "none";
+      }
+    });
+
+  scoreButton.addEventListener("click", () => {
+    fetch("/score_today")
+      .then(res => res.json())
+      .then(data => {
+        showScoreResult(data.result);
+        scoreButton.style.display = "none";
+      });
+  });
+});
