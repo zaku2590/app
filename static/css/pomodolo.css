@@ -4,66 +4,77 @@ body {
   font-family: "Noto Sans JP", sans-serif;
   background: linear-gradient(135deg, #e3f2fd, #64b5f6, #1e88e5);
   min-height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: white;
+  overflow: hidden;
 }
 
 .timer-container {
-  text-align: center;
-}
-
-.circle {
-  width: 280px;
-  height: 280px;
-  border: 5px solid rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  margin: 0 auto 30px;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.circle {
+  width: 95vw;
+  height: 95vw;
+  border: 8px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 #timer {
-  font-size: 48px;
+  font-size: 10vw;
   font-weight: bold;
 }
 
 #mode {
-  font-size: 18px;
+  font-size: 6vw;
   margin-top: 10px;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
+  gap: 40px;
+  margin-top: 40px;
 }
 
 .buttons button {
-  background: transparent;
-  border: 2px solid white;
+  background: rgba(255, 255, 255, 0.2);
+  border: 3px solid white;
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  font-size: 20px;
+  width: 140px;   /* ✅ 1.5倍に拡大 */
+  height: 140px;
+  font-size: 60px;
   color: white;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 
 .buttons button:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.4);
   transform: scale(1.1);
 }
 
 #pomodoro-count {
-  margin-top: 25px;
-  font-size: 14px;
+  margin-top: 40px;
+  font-size: 6vw;
 }
 
 .buttons #start.active {
@@ -80,46 +91,45 @@ body {
 
 .home-button {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 1.2em;
+  top: 20px;
+  left: 20px;
+  font-size: 1.6em;       /* ✅ 拡大 */
   text-decoration: none;
   font-weight: bold;
   background: #ddd;
-  padding: 15px 30px;
-  border-radius: 10px;
+  padding: 20px 32px;     /* ✅ 拡大 */
+  border-radius: 12px;
   color: #333;
   z-index: 999;
 }
 
 @media (max-width: 768px) {
-  body {
-    padding-top: 60px;
-  }
-
   .circle {
-    width: 95vw;
-    height: 95vw;
-    max-width: 360px;
-    max-height: 360px;
+    width: 98vw;
+    height: 98vw;
+    border-width: 10px;
   }
 
   #timer {
-    font-size: 72px;
+    font-size: 12vw;
   }
 
   #mode {
-    font-size: 22px;
+    font-size: 7vw;
   }
 
   .buttons button {
-    width: 70px;
-    height: 70px;
-    font-size: 28px;
+    width: 150px;
+    height: 150px;
+    font-size: 64px;
   }
 
   #pomodoro-count {
-    font-size: 20px;
-    margin-bottom: 20px;
+    font-size: 7vw;
+  }
+
+  .home-button {
+    font-size: 1.6em;
+    padding: 16px 28px;
   }
 }
