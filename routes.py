@@ -389,3 +389,11 @@ def upload_image():
     except Exception as e:
         print("❌ Supabaseへのアップロード失敗:", str(e))
         return jsonify({"error": str(e)}), 500
+    
+@main_bp.route("/ping")
+def ping():
+    return "pong", 200
+
+@main_bp.route("/privacy")
+def privacy_policy():
+    return render_template("privacy.html")
