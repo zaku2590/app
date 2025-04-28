@@ -59,7 +59,7 @@ body {
   background: rgba(255, 255, 255, 0.2);
   border: 3px solid white;
   border-radius: 50%;
-  width: 140px;   /* ✅ 1.5倍に拡大 */
+  width: 140px;
   height: 140px;
   font-size: 60px;
   color: white;
@@ -93,11 +93,11 @@ body {
   position: absolute;
   top: 20px;
   left: 20px;
-  font-size: 1.6em;       /* ✅ 拡大 */
+  font-size: 1.6em;
   text-decoration: none;
   font-weight: bold;
   background: #ddd;
-  padding: 20px 32px;     /* ✅ 拡大 */
+  padding: 20px 32px;
   border-radius: 12px;
   color: #333;
   z-index: 999;
@@ -131,5 +131,20 @@ body {
   .home-button {
     font-size: 1.6em;
     padding: 16px 28px;
+  }
+}
+
+@media (min-width: 769px) {
+  .circle {
+    width: 400px;
+    height: 400px;
+  }
+
+  #timer {
+    font-size: 80px;
+  }
+
+  #mode {
+    font-size: 36px;
   }
 }

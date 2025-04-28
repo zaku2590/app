@@ -153,6 +153,13 @@ body {
       gap: 20px;
       padding: 30px 20px;
     }
+
+    .welcome-logout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
   
     .feature {
       width: 100%;

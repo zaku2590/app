@@ -20,15 +20,23 @@ function updateDisplay() {
   modeDisplay.textContent = isWorkMode ? '作業中' : '休憩中';
 }
 
-function switchMode() {
-  if (!isWorkMode) {
-    pomodoroCount++;
-    countDisplay.textContent = `現在 ${pomodoroCount} ポモドーロ`;
+function fetchTodayPomodoroCount() {
+  fetch("/get_progress_count")
+    .then(res => res.json())
+    .then(data => {
+      pomodoroCount = data.count || 0;
+      countDisplay.textContent = `現在 ${pomodoroCount} ポモドーロ`;
+    });
+}
 
+function switchMode() {
+  if (isWorkMode) {
+    // 作業モードが終わったらカウントアップ
     fetch("/record_progress", { method: "POST" })
       .then(res => res.json())
       .then(data => {
         console.log("✅ 記録:", data);
+        fetchTodayPomodoroCount();
       });
   }
 
@@ -77,3 +85,4 @@ stopButton.addEventListener('click', stopTimer);
 resetButton.addEventListener('click', resetTimer);
 
 updateDisplay();
+fetchTodayPomodoroCount();
