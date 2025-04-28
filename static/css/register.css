@@ -51,7 +51,6 @@ h2 {
     cursor: pointer;
 }
 
-/* ホバー時のエフェクト */
 .register-form button:hover {
     background-color: #218838;
 }
@@ -70,7 +69,7 @@ h2 {
 .login-redirect a:hover {
     text-decoration: underline;
 }
-/* ホームボタン */
+
 .home-button {
     position: absolute;
     top: 10px;
