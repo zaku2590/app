@@ -140,15 +140,19 @@ def record_progress():
 
 @main_bp.route("/get_progress_count", methods=["GET"])
 def get_progress_count():
+    from sqlalchemy.exc import OperationalError
     username = session.get("twitter_user") or session.get("user")
     if not username:
         return jsonify({"count": 0})
-
-    user = User.query.filter_by(username=username).first()
-    today = date.today()
-    progress = Progress.query.filter_by(user_id=user.id, date=today).first()
-
-    return jsonify({"count": progress.count if progress else 0})
+    try:
+        user = User.query.filter_by(username=username).first()
+        today = date.today()
+        progress = Progress.query.filter_by(user_id=user.id, date=today).first()
+        return jsonify({"count": progress.count if progress else 0})
+    except OperationalError as e:
+        print("⚠️ DB接続エラー (get_progress_count):", str(e))
+        db.session.rollback()
+        return jsonify({"count": 0, "error": "DB接続に失敗しました"}), 500
 
 @main_bp.route("/get_progress_calendar", methods=["GET"])
 def get_progress_calendar():
