@@ -81,6 +81,7 @@ def twitter_callback():
         db.session.add(user)
         db.session.commit()
 
+    session.permanent = True  # ← 永続化を明示
     session.pop("user", None)
     session["twitter_user"] = username
     return redirect("/")
@@ -98,6 +99,7 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and check_password_hash(user.password, password):
+        session.permanent = True  # ← 永続化を明示
         session.pop("twitter_user", None)
         session["user"] = username
         return redirect("/")

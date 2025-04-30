@@ -2,7 +2,8 @@
 
 import os
 from dotenv import load_dotenv
-load_dotenv()  # ← 必ず一番最初に呼び出す！
+load_dotenv()
+from datetime import timedelta
 
 from flask import Flask
 from authlib.integrations.flask_client import OAuth
@@ -12,6 +13,7 @@ def create_app():
     app = Flask(__name__)
     app.config.from_object("app.config.Config")
     db.init_app(app)
+    app.permanent_session_lifetime = timedelta(days=365)
 
     # Twitter OAuth設定
     oauth = OAuth(app)

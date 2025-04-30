@@ -31,12 +31,20 @@ function fetchTodayPomodoroCount() {
 
 function switchMode() {
   if (isWorkMode) {
-    // 作業モードが終わったらカウントアップ
+    // 作業モードが終わったらカウントアップ（ログイン確認付き）
     fetch("/record_progress", { method: "POST" })
-      .then(res => res.json())
+      .then(res => {
+        if (res.status === 401) {
+          alert("⚠️ ログインしていないため記録されません。ログインしてください。");
+          return;
+        }
+        return res.json();
+      })
       .then(data => {
-        console.log("✅ 記録:", data);
-        fetchTodayPomodoroCount();
+        if (data) {
+          console.log("✅ 記録:", data);
+          fetchTodayPomodoroCount();
+        }
       });
   }
 
@@ -49,7 +57,6 @@ function startTimer() {
   if (isRunning) return;
 
   isRunning = true;
-
   startButton.classList.add("active");
   startButton.textContent = "⏳";
 
@@ -69,7 +76,6 @@ function startTimer() {
 function stopTimer() {
   clearInterval(timerInterval);
   isRunning = false;
-
   startButton.classList.remove("active");
   startButton.textContent = "▶";
 }
