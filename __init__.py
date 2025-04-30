@@ -7,25 +7,16 @@ load_dotenv()
 from datetime import timedelta
 from flask import Flask
 from authlib.integrations.flask_client import OAuth
-from flask_sqlalchemy import SQLAlchemy
-
-# SQLAlchemy: 切断対策をすべて有効化
-db = SQLAlchemy(engine_options={
-    "pool_pre_ping": True,  # 接続前に死活確認（切れてたら再接続）
-    "pool_recycle": 300     # 300秒ごとに再利用（Supabaseとの相性◎）
-})
+from app.models import db  # ✅ models.py の db をインポート
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("app.config.Config")
 
-    # DB初期化
-    db.init_app(app)
+    db.init_app(app)  # ✅ Flask app に models.py の db を登録
 
-    # セッションの有効期限（365日）
     app.permanent_session_lifetime = timedelta(days=365)
 
-    # Twitter OAuth 設定
     oauth = OAuth(app)
     twitter = oauth.register(
         name='twitter',
@@ -38,11 +29,9 @@ def create_app():
     )
     app.twitter = twitter
 
-    # Blueprint 登録
     from app.routes import main_bp
     app.register_blueprint(main_bp)
 
-    # リクエスト終了時に DB セッションを閉じる（リーク防止）
     @app.teardown_appcontext
     def shutdown_session(exception=None):
         db.session.remove()
