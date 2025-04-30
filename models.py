@@ -2,7 +2,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import func
 
 
-db = SQLAlchemy()
+db = SQLAlchemy(engine_options={
+    "pool_pre_ping": True,
+    "pool_recycle": 300
+})
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
