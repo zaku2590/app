@@ -28,7 +28,7 @@
     </div>
 
     <div class="sidebar">
-      <h3>🗂 最近の投稿</h3>
+      <h3>🗂 おススメの投稿</h3>
       {% for recent in recent_posts %}
         <a href="{{ url_for('main.blog_detail', post_id=recent.id) }}" class="blog-card-link">
           <div class="blog-card">

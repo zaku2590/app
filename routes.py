@@ -8,6 +8,7 @@ from app.services import generate_response_score, get_logged_in_user
 import uuid
 from werkzeug.utils import secure_filename
 from supabase import create_client
+from sqlalchemy.sql.expression import func
 
 main_bp = Blueprint("main", __name__)
 
@@ -290,7 +291,7 @@ def blog_list():
 @main_bp.route("/blog/<int:post_id>")
 def blog_detail(post_id):
     post = BlogPost.query.get_or_404(post_id)
-    recent_posts = BlogPost.query.order_by(BlogPost.updated_at.desc()).limit(5)
+    recent_posts = BlogPost.query.order_by(func.random()).limit(7)  # ← ランダム7件に変更
     return render_template("blog_detail.html", post=post, recent_posts=recent_posts)
 
 @main_bp.route("/blog/new", methods=["GET", "POST"])
