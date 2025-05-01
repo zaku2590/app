@@ -2,6 +2,8 @@ from flask import Blueprint, render_template, request, jsonify, session, redirec
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import tempfile
+from datetime import datetime, timedelta
+import pytz
 from datetime import date, datetime
 from app.models import db, User, Progress, BlogPost
 from app.services import generate_response_score, get_logged_in_user
@@ -122,7 +124,7 @@ def record_progress():
         return jsonify({"message": "ログインしていないため記録しません"}), 401
 
     user = User.query.filter_by(username=username).first()
-    today = date.today()
+    today = get_japan_today_4am_base()
 
     progress = Progress.query.filter_by(user_id=user.id, date=today).first()
     if not progress:
@@ -146,7 +148,7 @@ def get_progress_count():
         return jsonify({"count": 0})
 
     user = User.query.filter_by(username=username).first()
-    today = date.today()
+    today = get_japan_today_4am_base()
     progress = Progress.query.filter_by(user_id=user.id, date=today).first()
 
     return jsonify({"count": progress.count if progress else 0})
@@ -240,7 +242,7 @@ def score_today():
         return jsonify({"result": "ログインしていません。"}), 401
 
     user = User.query.filter_by(username=username).first()
-    today = date.today()
+    today = get_japan_today_4am_base()
     progress = Progress.query.filter_by(user_id=user.id, date=today).first()
 
     if not progress:
@@ -400,3 +402,10 @@ def ping():
 @main_bp.route("/privacy")
 def privacy_policy():
     return render_template("privacy.html")
+
+
+def get_japan_today_4am_base():
+    now = datetime.now(pytz.timezone("Asia/Tokyo"))
+    if now.hour < 4:
+        now -= timedelta(days=1)
+    return now.date()
