@@ -66,11 +66,15 @@ def login_page():
 
 @main_bp.route("/login/twitter")
 def login_twitter():
+    print("✅ /login/twitter アクセスあり")
+    print("📦 session before redirect:", dict(session))  # セッション確認
     redirect_uri = "https://pomolog.net/login/callback"
     return current_app.twitter.authorize_redirect(redirect_uri)
 
 @main_bp.route("/login/callback")
 def twitter_callback():
+    print("✅ /login/callback アクセスあり")
+    print("📦 session before token exchange:", dict(session))  # セッション確認
     token = current_app.twitter.authorize_access_token()
     resp = current_app.twitter.get("account/verify_credentials.json")
     user_info = resp.json()
