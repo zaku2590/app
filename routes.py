@@ -407,6 +407,13 @@ def ping():
 def privacy_policy():
     return render_template("privacy.html")
 
+@main_bp.route("/contact")
+def contact():
+    return render_template("contact.html")
+
+@main_bp.route("/about")
+def about():
+    return render_template("about.html")
 
 def get_japan_today_4am_base():
     now = datetime.now(pytz.timezone("Asia/Tokyo"))
