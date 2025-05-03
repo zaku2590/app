@@ -37,7 +37,7 @@ function showScoreResult(result) {
   scoreElem.className = "score-rank " + score.toLowerCase();
   document.getElementById("resultBox").style.display = "block";
 
-  const tweetText = `📊今日の評価：${score}！\n🧠AIから一言：${comment}\n#ぽもログ #すき間ジム`;
+  const tweetText = `📊今日の評価：${score}！\n🧠AIから一言：${comment}\n#ぽもログ #勉強垢`;
   const tweetURL = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
   tweetButton.href = tweetURL;
   tweetButton.style.display = "inline-block";
