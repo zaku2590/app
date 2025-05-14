@@ -5,14 +5,114 @@ body {
   background-color: #E3F2FD;
 }
 
-.header {
-  background-color: #2196F3;
-  color: rgb(10, 10, 10);
-  text-align: center;
-  padding: 30px;
-  font-size: 48px;
+/* ✅ ヘッダー全体を3分割 */
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  font-size: 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #ddd;
+  flex-wrap: wrap;
 }
 
+/* 左：ロゴ + ポイント交換 */
+.left-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.8em;
+}
+
+.exchange-button {
+  font-size: 14px;
+  padding: 6px 12px;
+  background-color: #ff9800;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.exchange-button:hover {
+  background-color: #e68900;
+}
+
+/* 中央：こんにちは */
+.center-header {
+  flex: 1;
+  text-align: center;
+}
+
+.welcome {
+  font-size: 16px;
+  color: #1565C0;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+/* 右：通知・ポイント・ログアウト */
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.notice-box {
+  font-size: 14px;
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ffeeba;
+}
+
+.point-display {
+  font-size: 16px;
+  color: #1565C0;
+  font-weight: bold;
+}
+
+.logout-button {
+  font-size: 14px;
+  padding: 6px 12px;
+  background-color: #f44336;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #d32f2f;
+}
+
+/* ログインボタン（未ログイン時） */
+.login-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.login-button {
+  font-size: 16px;
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #45a049;
+}
+
+/* メインビジュアル */
 .main-visual {
   width: 100%;
   height: 100px;
@@ -27,6 +127,7 @@ body {
   padding: 20px 0;
 }
 
+/* 特徴一覧 */
 .features {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -44,7 +145,6 @@ body {
   border-radius: 15px;
   border: 2px solid #2196F3;
   transition: transform 0.3s ease, background-color 0.3s ease;
-  box-sizing: border-box;
   text-align: center;
 }
 
@@ -64,15 +164,12 @@ body {
   padding: 20px;
   width: 100%;
   height: 100%;
-  text-align: center;
-  box-sizing: border-box;
 }
 
 .feature img {
   width: 120px;
   height: 120px;
-  margin: 0 auto 15px auto;
-  display: block;
+  margin-bottom: 15px;
 }
 
 .feature-button h3,
@@ -82,10 +179,7 @@ body {
   text-align: center;
 }
 
-.separator {
-  display: none;
-}
-
+/* フッター */
 .footer {
   background-color: #1565C0;
   color: white;
@@ -93,59 +187,7 @@ body {
   padding: 20px;
 }
 
-.header-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  font-size: 24px;
-  background-color: #f8f8f8;
-  border-bottom: 1px solid #ddd;
-  position: relative;
-  flex-wrap: wrap;
-}
-
-.logo {
-  font-weight: bold;
-}
-
-.login-button {
-  font-size: 16px;
-  padding: 8px 16px;
-  background-color: #4CAF50;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-  background-color: #45a049;
-}
-
-.welcome {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  color: #1565C0;
-}
-
-.logout-button {
-  font-size: 16px;
-  padding: 8px 16px;
-  background-color: #f44336;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-right: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-  background-color: #d32f2f;
-}
-
+/* モバイル対応 */
 @media (max-width: 768px) {
   .features {
     grid-template-columns: 1fr;
@@ -158,39 +200,40 @@ body {
     margin: 0 auto;
   }
 
-  .header {
-    font-size: 36px;
-    padding: 20px;
-  }
-
-  .main-visual {
-    font-size: 22px;
-    padding: 24px 10px;
-  }
-
   .header-container {
     flex-direction: column;
     align-items: center;
     gap: 10px;
   }
 
-  .login-button,
-  .logout-button {
-    font-size: 14px;
-    padding: 6px 12px;
+  .left-header,
+  .user-actions {
+    justify-content: center;
   }
 
-  .welcome-logout {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
+  .center-header {
+    order: 2;
+    text-align: center;
+    width: 100%;
   }
 
   .welcome {
-    position: static;
-    transform: none;
     font-size: 14px;
-    text-align: center;
+  }
+
+  .exchange-button,
+  .logout-button,
+  .login-button {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .point-display {
+    font-size: 14px;
+  }
+
+  .main-visual {
+    font-size: 22px;
+    padding: 24px 10px;
   }
 }

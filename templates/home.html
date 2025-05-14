@@ -8,28 +8,33 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
-    <div class="header-container">
-        <div class="logo">ぽもログ</div>
+  <div class="header-container">
+  <!-- 左：ロゴ + 交換 -->
+  <div class="left-header">
+    <div class="logo">ぽもログ</div>
+    <a href="/exchange" class="exchange-button">🎁 ポイント交換</a>
+  </div>
 
-        {% if session.twitter_user %}
-            <div class="welcome-logout">
-                <div class="welcome">こんにちは、@{{ session.twitter_user }} さん</div>
-                <a href="/logout" class="logout-button">ログアウト</a>
-            </div>
-
-        {% elif user %}
-            <div class="welcome-logout">
-                <div class="welcome">こんにちは、{{ user }} さん</div>
-                <a href="/logout" class="logout-button">ログアウト</a>
-            </div>
-
-        {% else %}
-            <div class="login-buttons">
-                <a href="/login" class="login-button">ログイン</a>
-                <a href="/login/twitter" class="login-button">Xでログイン</a>
-            </div>
-        {% endif %}
+  <!-- 中央：こんにちは -->
+  {% if user %}
+    <div class="center-header">
+      <div class="welcome">こんにちは、{% if session.twitter_user %}@{% endif %}{{ user }} さん</div>
     </div>
+  {% endif %}
+
+  <!-- 右：ポイント + ログアウト -->
+  {% if user %}
+    <div class="user-actions">
+      {% if notice %}
+        <div class="notice-box">{{ notice }}</div>
+      {% endif %}
+      {% if point is not none %}
+        <div class="point-display">💰 {{ point }}pt</div>
+      {% endif %}
+      <a href="/logout" class="logout-button">ログアウト</a>
+    </div>
+  {% endif %}
+  </div>
 
     <div class="main-visual">ぽもログ、あなたの“ちょっとずつ”を応援します</div>
 

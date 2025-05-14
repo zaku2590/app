@@ -12,6 +12,10 @@ class User(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.Text, nullable=False)
     is_public = db.Column(db.Boolean, default=True)
+    point = db.Column(db.Integer, default=0)
+    last_shared_date = db.Column(db.Date)
+    notice_message = db.Column(db.Text)
+    exchange_status = db.Column(db.String, default="none")
     
 class Progress(db.Model):
     id = db.Column(db.Integer, primary_key=True)

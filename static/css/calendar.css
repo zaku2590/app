@@ -130,6 +130,31 @@ body {
   white-space: pre-wrap !important;
 }
 
+#supportButton {
+  padding: 16px 32px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+#supportButton:hover {
+  background-color: #45a049;
+}
+
+#supportAmount {
+  padding: 16px 32px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100px;
+  text-align: right;
+}
+
+
 /* ✅ スマホ対応 */
 @media (max-width: 768px) {
   body {

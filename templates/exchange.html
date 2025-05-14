@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ポイント交換</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/exchange.css') }}">
+</head>
+<body>
+  <a href="/" class="home-button">🏠 ホーム</a>
+
+  <div class="exchange-container">
+    <h1>🎁 ポイント交換</h1>
+    <p class="point-display">現在のポイント：{{ point }}pt</p>
+
+    {% if status == 'pending' %}
+      <p class="pending">申請中です。しばらくお待ちください。</p>
+    {% elif point >= 50000 %}
+      <form method="POST">
+        <button type="submit" class="exchange-button">50000ptで交換する</button>
+      </form>
+    {% else %}
+      <p class="not-enough">50000pt 貯まるとギフトカードと交換できます。</p>
+    {% endif %}
+  </div>
+</body>
+</html>

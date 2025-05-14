@@ -3,9 +3,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const toggleBtn = document.getElementById('toggleVisibilityBtn');
   const userSearchInput = document.getElementById('userSearchInput');
   const resetCalendarButton = document.getElementById('resetCalendarButton');
+  const supportButton = document.getElementById('supportButton');
+  const supportAmountInput = document.getElementById('supportAmount');
   const errorBox = document.getElementById("searchError");
 
   let calendar = null;
+  let selectedUsername = null;
 
   function updateToggleButton(isPublic) {
     toggleBtn.textContent = isPublic
@@ -18,9 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   fetch("/get_visibility_status")
     .then(res => res.json())
-    .then(data => {
-      updateToggleButton(data.is_public);
-    });
+    .then(data => updateToggleButton(data.is_public));
 
   toggleBtn.addEventListener("click", () => {
     fetch("/toggle_calendar_visibility", { method: "POST" })
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderCalendar(events, readOnly = false, username = null) {
     if (calendar) calendar.destroy();
+    selectedUsername = username;
 
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
@@ -53,9 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         fetch(url)
           .then(res => res.json())
-          .then(data => {
-            openModal(dateStr, data.count || 0, data.memo || "", readOnly);
-          });
+          .then(data => openModal(dateStr, data.count || 0, data.memo || "", readOnly));
       }
     });
 
@@ -64,16 +64,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   fetch("/get_progress_calendar")
     .then(res => res.json())
-    .then(events => {
-      renderCalendar(events, false);
-    });
+    .then(events => renderCalendar(events, false));
 
   document.getElementById("userSearchButton").addEventListener("click", loadCalendarForUser);
 
   function loadCalendarForUser() {
     const username = userSearchInput.value.trim();
     errorBox.textContent = "";
-
     if (!username) return;
 
     fetch(`/get_progress_calendar?username=${username}`)
@@ -89,6 +86,8 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar(events, true, username);
         resetCalendarButton.style.display = "inline-block";
         toggleBtn.style.display = "none";
+        supportButton.style.display = "inline-block";
+        supportAmountInput.style.display = "inline-block";
       })
       .catch(error => {
         errorBox.textContent = "❌ " + error.message;
@@ -99,6 +98,8 @@ document.addEventListener('DOMContentLoaded', function () {
     userSearchInput.value = "";
     errorBox.textContent = "";
     resetCalendarButton.style.display = "none";
+    supportButton.style.display = "none";
+    supportAmountInput.style.display = "none";
 
     fetch("/get_progress_calendar")
       .then(res => res.json())
@@ -106,6 +107,25 @@ document.addEventListener('DOMContentLoaded', function () {
         renderCalendar(events, false);
         toggleBtn.style.display = "inline-block";
       });
+  });
+
+  supportButton.addEventListener("click", () => {
+    if (!selectedUsername) return;
+
+    const amount = parseInt(supportAmountInput.value);
+    if (!amount || amount <= 0) {
+      alert("1以上のポイント数を入力してください。");
+      return;
+    }
+
+    fetch("/support_user", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ to_username: selectedUsername, amount: amount })
+    })
+      .then(res => res.json())
+      .then(data => alert(data.message))
+      .catch(err => alert("エラー: " + err));
   });
 });
 
@@ -135,7 +155,7 @@ function openModal(dateStr, currentCount, currentMemo, readOnly = false) {
   buttons.appendChild(closeBtn);
 
   const modal = document.getElementById("memoModal");
-  modal.style.display = "flex"; // ✅ モーダルを中央に表示（CSSで flex 中央化）
+  modal.style.display = "flex";
 }
 
 function closeModal() {

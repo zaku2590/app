@@ -27,7 +27,16 @@ supabase = create_client(
 @main_bp.route("/", methods=["GET"])
 def home_page():
     username = session.get("twitter_user") or session.get("user")
-    return render_template("home.html", user=username)
+    user_obj = User.query.filter_by(username=username).first() if username else None
+    point = user_obj.point if user_obj else None
+
+    # ✅ 通知を読み取り＆表示後にクリア
+    notice = user_obj.notice_message if user_obj else None
+    if user_obj and user_obj.notice_message:
+        user_obj.notice_message = None
+        db.session.commit()
+
+    return render_template("home.html", user=username, point=point, notice=notice)
 
 @main_bp.route("/score")
 def score_page():
@@ -420,3 +429,61 @@ def get_japan_today_4am_base():
     if now.hour < 4:
         now -= timedelta(days=1)
     return now.date()
+
+@main_bp.route("/support_user", methods=["POST"])
+def support_user():
+    from_user = get_logged_in_user()
+    data = request.json
+    to_username = data.get("to_username")
+    amount = int(data.get("amount", 0))
+
+    if not from_user or amount <= 0 or from_user.point < amount:
+        return jsonify({"message": "ポイント不足か不正な入力です"}), 400
+
+    to_user = User.query.filter_by(username=to_username).first()
+    if not to_user:
+        return jsonify({"message": "相手が見つかりません"}), 404
+
+    from_user.point -= amount
+    to_user.point += amount
+
+    to_user.notice_message = f"{from_user.username} さんから {amount} ポイント受け取りました！"
+
+    db.session.commit()
+
+    return jsonify({"message": f"{to_username} さんに {amount}pt 応援しました！"})
+
+@main_bp.route("/shared_on_x", methods=["POST"])
+def shared_on_x():
+    user = get_logged_in_user()
+    if not user:
+        return jsonify({"message": "ログインが必要です"}), 401
+
+    today = date.today()
+    if user.last_shared_date == today:
+        return jsonify({"message": "今日はすでに共有済みです"}), 400
+
+    user.point += 200
+    user.last_shared_date = today
+    db.session.commit()
+
+    return jsonify({"message": "200pt付与しました！🎉"})
+
+@main_bp.route("/exchange", methods=["GET", "POST"])
+def exchange():
+    user = get_logged_in_user()
+    if not user:
+        return redirect("/login")
+
+    if request.method == "POST":
+        if user.point < 50000:
+            return "ポイントが足りません", 400
+        if user.exchange_status == "pending":
+            return "すでに申請中です", 400
+
+        user.point -= 50000
+        user.exchange_status = "pending"
+        db.session.commit()
+        return redirect("/exchange")
+
+    return render_template("exchange.html", point=user.point, status=user.exchange_status)

@@ -1,20 +1,17 @@
 function truncateComment(comment, maxLen = 90) {
   if (comment.length <= maxLen) return comment;
 
-  // 「。」や「！」や「？」の直後で90文字以内の最長位置を探す
   const punctuation = ["。", "！", "？"];
   let cutPos = -1;
   for (const mark of punctuation) {
     const pos = comment.lastIndexOf(mark, maxLen);
-    if (pos > cutPos) cutPos = pos + 1; // 句点の直後で切る
+    if (pos > cutPos) cutPos = pos + 1;
   }
 
-  // 区切れる句読点が見つかった場合
   if (cutPos > 0) {
     return comment.substring(0, cutPos);
   }
 
-  // それでもなければ強制的にカットして「…」追加
   return comment.substring(0, maxLen) + "…";
 }
 
@@ -23,24 +20,33 @@ function showScoreResult(result) {
   const commentMatch = result.match(/コメント[:：]\s*(.+)/);
 
   const score = scoreMatch ? scoreMatch[1] : "？";
-  let comment = commentMatch ? commentMatch[1] : "コメントなし";
-
-  // ✅ コメントを自然な位置で最大90文字に制限
-  comment = truncateComment(comment);
+  const fullComment = commentMatch ? commentMatch[1] : "コメントなし";
+  const tweetComment = truncateComment(fullComment);  // ✅ ツイート用に短縮
 
   const scoreElem = document.getElementById("scoreNumber");
   const commentElem = document.getElementById("scoreComment");
   const tweetButton = document.getElementById("tweetButton");
 
+  // ✅ 画面には全文を表示
   scoreElem.textContent = score;
-  commentElem.textContent = comment;
+  commentElem.textContent = fullComment;
   scoreElem.className = "score-rank " + score.toLowerCase();
   document.getElementById("resultBox").style.display = "block";
 
-  const tweetText = `📊今日の評価：${score}！\n🧠AIから一言：${comment}\n#ぽもログ #勉強垢`;
+  // ✅ ツイートには短縮版コメントを使う
+  const tweetText = `📊今日の評価：${score}！\n🧠AIから一言：${tweetComment}\n#ぽもログ #勉強垢`;
   const tweetURL = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(tweetText);
   tweetButton.href = tweetURL;
   tweetButton.style.display = "inline-block";
+
+  // ✅ 共有時に200pt付与
+  tweetButton.addEventListener("click", () => {
+    fetch("/shared_on_x", { method: "POST" })
+      .then(res => res.json())
+      .then(data => {
+        alert(data.message);
+      });
+  });
 }
 
 window.addEventListener("DOMContentLoaded", () => {
