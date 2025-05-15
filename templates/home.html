@@ -10,83 +10,97 @@
     <link rel="canonical" href="https://pomolog.net/">
     <title>pomolog</title>
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "ぽもログ",
-    "url": "https://pomolog.net/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://pomolog.net/blog?q={search_term_string}",
-      "query-input": "required name=search_term_string"
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "ぽもログ",
+      "url": "https://pomolog.net/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://pomolog.net/blog?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
     }
-  }
-  </script>
+    </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
   <div class="header-container">
-  <div class="left-header">
-    <div class="logo">ぽもログ</div>
-    <a href="/exchange" class="exchange-button">🎁 ポイント交換</a>
+    <div class="left-header">
+      <div class="logo">ぽもログ</div>
+      <a href="/exchange" class="exchange-button">🎁 ポイント交換</a>
+    </div>
+
+    {% if user is not none %}
+      <div class="center-header">
+        <div class="welcome">
+          こんにちは、
+          {% if session.get("twitter_user") %}
+            @{{ user }}
+          {% else %}
+            {{ user }}
+          {% endif %}
+          さん
+        </div>
+      </div>
+    {% endif %}
+
+    {% if user is not none %}
+      <div class="user-actions">
+        {% if notice %}
+          <div class="notice-box">{{ notice }}</div>
+        {% endif %}
+        {% if point is not none %}
+          <div class="point-display">💰 {{ point }}pt</div>
+        {% endif %}
+        <a href="/logout" class="logout-button">ログアウト</a>
+      </div>
+    {% else %}
+      <div class="login-buttons">
+        <a href="/login" class="login-button">ログイン</a>
+        <a href="/login/twitter" class="login-button" style="background-color:#1da1f2;">Twitterでログイン</a>
+      </div>
+    {% endif %}
   </div>
 
-  {% if user %}
-    <div class="center-header">
-      <div class="welcome">こんにちは、{% if session.twitter_user %}@{% endif %}{{ user }} さん</div>
-    </div>
-  {% endif %}
+  <div class="main-visual">ぽもログ、あなたの“ちょっとずつ”を応援します</div>
 
-  {% if user %}
-    <div class="user-actions">
-      {% if notice %}
-        <div class="notice-box">{{ notice }}</div>
-      {% endif %}
-      {% if point is not none %}
-        <div class="point-display">💰 {{ point }}pt</div>
-      {% endif %}
-      <a href="/logout" class="logout-button">ログアウト</a>
+  <div class="features">
+    <div class="feature">
+      <a href="/calendar" class="feature-button">
+        <img src="{{ url_for('static', filename='img/カレンダー.png') }}" alt="カレンダー">
+        <h3>カレンダー</h3>
+        <p>進捗管理</p>
+      </a>
     </div>
-  {% endif %}
+    <div class="feature">
+      <a href="/pomodolo" class="feature-button">
+        <img src="{{ url_for('static', filename='img/pomolog.png') }}" alt="ポモドーロタイマー">
+        <h3>ポモドーロタイマー</h3>
+        <p>集中力アップ</p>
+      </a>
+    </div>
+    <div class="feature">
+      <a href="/score" class="feature-button">
+        <img src="{{ url_for('static', filename='img/ひとこと.png') }}" alt="一言">
+        <h3>１日を評価<br><small>*1日1回しか出来ません。</small></h3>
+        <p></p>
+      </a>
+    </div>
+    <div class="feature">
+      <a href="/blog" class="feature-button">
+        <img src="{{ url_for('static', filename='img/知識.jpg') }}" alt="ブログ">
+        <h3>ブログ</h3>
+        <p>5分で読める人生を豊かにする知識</p>
+      </a>
+    </div>
   </div>
 
-    <div class="main-visual">ぽもログ、あなたの“ちょっとずつ”を応援します</div>
-
-    <div class="features">
-        <div class="feature">
-            <a href="/calendar" class="feature-button">
-                <img src="{{ url_for('static', filename='img/カレンダー.png') }}" alt="カレンダー">
-                <h3>カレンダー</h3>
-                <p>進捗管理</p>
-            </a>
-        </div>
-        <div class="feature">
-            <a href="/pomodolo" class="feature-button">
-                <img src="{{ url_for('static', filename='img/pomolog.png') }}" alt="ポモドーロタイマー">
-                <h3>ポモドーロタイマー</h3>
-                <p>集中力アップ</p>
-            </a>
-        </div>
-        <div class="feature">
-            <a href="/score" class="feature-button">
-                <img src="{{ url_for('static', filename='img/ひとこと.png') }}" alt="一言">
-                <h3>１日を評価<br><small>*1日1回しか出来ません。</small></h3>
-                <p></p>
-            </a>
-        </div>
-        <div class="feature">
-            <a href="/blog" class="feature-button">
-                <img src="{{ url_for('static', filename='img/知識.jpg') }}" alt="ブログ">
-                <h3>ブログ</h3>
-                <p>5分で読める人生を豊かにする知識</p>
-            </a>
-        </div>
-    </div>
-    <div class="footer">
-        &copy; 2025 pomolog | 
-        <a href="/privacy" style="color:white; text-decoration: underline;">プライバシーポリシー</a>
-        <a href="/about" style="color:white; text-decoration: underline; margin-left: 10px;">運営者情報</a>
-        <a href="/contact" style="color:white; text-decoration: underline; margin-left: 10px;">お問い合わせ</a>
-    </div>
+  <div class="footer">
+    &copy; 2025 pomolog |
+    <a href="/privacy" style="color:white; text-decoration: underline;">プライバシーポリシー</a>
+    <a href="/about" style="color:white; text-decoration: underline; margin-left: 10px;">運営者情報</a>
+    <a href="/contact" style="color:white; text-decoration: underline; margin-left: 10px;">お問い合わせ</a>
+  </div>
 </body>
 </html>

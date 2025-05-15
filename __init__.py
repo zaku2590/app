@@ -7,13 +7,13 @@ load_dotenv()
 from datetime import timedelta
 from flask import Flask
 from authlib.integrations.flask_client import OAuth
-from app.models import db  # ✅ models.py の db をインポート
+from app.models import db 
 
 def create_app():
     app = Flask(__name__)
     app.config.from_object("app.config.Config")
 
-    db.init_app(app)  # ✅ Flask app に models.py の db を登録
+    db.init_app(app) 
 
     app.permanent_session_lifetime = timedelta(days=365)
 

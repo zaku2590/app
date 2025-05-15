@@ -23,12 +23,12 @@ body {
 }
 
 .score-container h1 {
-  font-size: 3em; /* ✅ タイトル拡大 */
+  font-size: 3em;
   margin-bottom: 20px;
 }
 
 .score-container p {
-  font-size: 1.8em; /* ✅ 説明文拡大 */
+  font-size: 1.8em;
   margin-bottom: 40px;
 }
 
@@ -38,7 +38,7 @@ body {
 }
 
 #scoreButton {
-  font-size: 3em; /* ✅ ボタン拡大 */
+  font-size: 3em;
   padding: 28px 56px;
   background: #ff69b4;
   border: none;
@@ -46,6 +46,7 @@ body {
   color: white;
   cursor: pointer;
   transition: background 0.3s;
+  position: relative;
 }
 
 #scoreButton:hover {
@@ -135,6 +136,23 @@ body {
 .tweet-button:hover {
   background: #e1ecf4;
   transform: scale(1.05);
+}
+
+/* 🔄 スピナー追加 */
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #ffffff;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 768px) {

@@ -35,7 +35,8 @@ def home_page():
     if user_obj and user_obj.notice_message:
         user_obj.notice_message = None
         db.session.commit()
-
+    
+    print("🧪 セッションの中身:", dict(session))
     return render_template("home.html", user=username, point=point, notice=notice)
 
 @main_bp.route("/score")
@@ -104,8 +105,7 @@ def twitter_callback():
 
 @main_bp.route("/logout")
 def logout():
-    session.pop("user", None)
-    session.pop("twitter_user", None)
+    session.clear()
     return redirect("/")
 
 @main_bp.route("/login_input", methods=["POST"])
@@ -115,12 +115,13 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and check_password_hash(user.password, password):
-        session.permanent = True  # ← 永続化を明示
-        session.pop("twitter_user", None)
+        session.clear()
         session["user"] = username
+        session.permanent = True
         return redirect("/")
     else:
-        return "ログイン失敗！<a href='/login'>戻る</a>"
+        flash("ユーザー名またはパスワードが正しくありません")
+        return redirect(url_for("main.login_page"))
 
 @main_bp.route("/pomodolo", methods=["GET"])
 def pomodolo():
