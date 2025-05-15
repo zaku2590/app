@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', function () {
   let calendar = null;
   let selectedUsername = null;
 
+  // ✅ 初期状態で応援UI非表示
+  supportButton.style.display = "none";
+  supportAmountInput.style.display = "none";
+  resetCalendarButton.style.display = "none";
+
   function updateToggleButton(isPublic) {
     toggleBtn.textContent = isPublic
       ? "🔓 公開中（クリックで非公開）"

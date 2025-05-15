@@ -1,17 +1,9 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9746925195117210"
-     crossorigin="anonymous"></script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="ぽもログは、ポモドーロ・カレンダー・AI評価などを活用して、スキマ時間の努力を“見える化”するWebサービスです。">
-  <meta name="keywords" content="ポモドーロ, ぽもログ, 勉強垢, カレンダー, スキマ時間, AI評価, 習慣化, タスク管理">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://pomolog.net/calender">
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>進捗カレンダー | ぽもログ</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.css" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/calendar.css') }}">
 </head>
 <body>
@@ -19,25 +11,35 @@
 
   <h1 style="text-align: center;">📅 進捗カレンダー</h1>
 
-  <!-- 🔍 ユーザー検索フォーム -->
-  <div style="text-align:center; margin: 10px; display: flex; justify-content: center; align-items: center; gap: 10px;">
-    <input type="number" id="supportAmount" value="100" min="1" style="width: 80px; padding: 8px; font-size: 16px; display:none;">
-    <button id="supportButton" style="display: none;">💖 応援する</button>
-    <input type="text" id="userSearchInput" placeholder="ユーザー名を検索">
-    <button id="userSearchButton">🔍 検索</button>
-    <button id="resetCalendarButton" style="display:none;">↩ 自分のカレンダーに戻る</button>
-  </div>
-  <div id="searchError" style="color: red; margin-top: 5px; text-align:center;"></div>
+  <!-- 🔽 応援 + 検索 + 戻る -->
+  <div class="calendar-actions">
 
-  <!-- 🔒 公開設定 -->
+    <div class="support-group">
+      <input type="number" id="supportAmount" placeholder="ポイント数" value="100" min="1">
+      <button id="supportButton">💖 応援する</button>
+    </div>
+
+    <div class="search-group">
+      <input type="text" id="userSearchInput" placeholder="ユーザー名を検索">
+      <button id="userSearchButton">🔍 検索</button>
+    </div>
+
+    <button id="resetCalendarButton">🔄 自分のカレンダーに戻る</button>
+
+    <div id="searchError" style="color: red; text-align: center; margin-top: 6px;"></div>
+  </div>
+
+  <!-- 🔓 公開設定 -->
   <div style="text-align: center; margin: 10px;">
     <button id="toggleVisibilityBtn">🔒 状態取得中...</button>
   </div>
 
-  <!-- 📅 カレンダー本体 -->
-  <div id="calendar"></div>
+  <!-- ✅ FullCalendar本体をラップ -->
+  <div class="calendar-wrapper">
+    <div id="calendar"></div>
+  </div>
 
-  <!-- ✅ モーダル（メモ編集） -->
+  <!-- ✏️ メモモーダル -->
   <div id="memoModal">
     <div class="modal-content">
       <h3 id="memoModalDate">📅 日付</h3>

@@ -7,45 +7,89 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 
-#calendar {
-  max-width: 100vw;
-  width: 100vw;
-  padding: 20px;
-  background-color: white;
+.home-button {
+  position: static;
+  display: inline-block;
+  font-size: 1.2em;
+  text-decoration: none;
+  font-weight: bold;
+  background: #ddd;
+  padding: 12px 24px;
+  border-radius: 10px;
+  color: #333;
+  z-index: 10;
+  margin: 12px auto;
+}
+
+.calendar-actions {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 16px;
   box-sizing: border-box;
-  margin-top: 40px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.support-group,
+.search-group {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+#supportAmount,
 #userSearchInput {
-  padding: 20px;
-  font-size: 18px;
-  width: 250px;
-  border-radius: 8px;
+  padding: 10px;
+  font-size: 16px;
   border: 1px solid #ccc;
+  border-radius: 6px;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
-#userSearchButton,
-#resetCalendarButton {
-  padding: 16px 32px;
-  font-size: 18px;
+#supportButton,
+#userSearchButton {
+  padding: 10px 16px;
+  font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 6px;
   background-color: #4CAF50;
   color: white;
   cursor: pointer;
-  margin: 10px;
+  white-space: nowrap;
 }
 
-#userSearchButton:hover,
-#resetCalendarButton:hover {
+#supportButton:hover,
+#userSearchButton:hover {
   background-color: #45a049;
 }
 
+#resetCalendarButton {
+  display: block;
+  margin: 16px auto;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2196F3;
+  color: white;
+  cursor: pointer;
+}
+
+#resetCalendarButton:hover {
+  background-color: #1976D2;
+}
+
 #toggleVisibilityBtn {
-  margin: 30px auto;
+  margin: 20px auto;
   padding: 16px 32px;
   font-size: 1em;
   border-radius: 8px;
@@ -55,21 +99,38 @@ body {
   display: block;
 }
 
-.home-button {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  font-size: 1.2em;
-  text-decoration: none;
-  font-weight: bold;
-  background: #ddd;
-  padding: 12px 24px;
-  border-radius: 10px;
-  color: #333;
-  z-index: 999;
+/* ✅ FullCalendarラップで横スクロール防止 */
+.calendar-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  box-sizing: border-box;
 }
 
-/* モーダル */
+#calendar {
+  width: 100%;
+  min-width: unset;
+  padding: 0 12px;
+  box-sizing: border-box;
+  background-color: white;
+  margin-top: 20px;
+}
+
+/* FullCalendar内部の横はみ出し対策 */
+.fc,
+.fc-scrollgrid,
+.fc-view-harness {
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+}
+
+.fc-event-title {
+  font-size: 1em !important;
+  white-space: pre-wrap !important;
+}
+
+/* ✏️ メモモーダル */
 #memoModal {
   display: none;
   position: fixed;
@@ -121,78 +182,25 @@ body {
   color: white;
 }
 
-/* カレンダーイベント */
-.fc {
-  width: 100% !important;
-}
-.fc-event-title {
-  font-size: 1em !important;
-  white-space: pre-wrap !important;
-}
-
-#supportButton {
-  padding: 16px 32px;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
-}
-
-#supportButton:hover {
-  background-color: #45a049;
-}
-
-#supportAmount {
-  padding: 16px 32px;
-  font-size: 18px;
-  border: none;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  width: 100px;
-  text-align: right;
-}
-
-
-/* ✅ スマホ対応 */
+/* ✅ モバイル対応 */
 @media (max-width: 768px) {
-  body {
-    padding-top: 60px;
+  .calendar-actions {
+    padding: 0 12px;
   }
 
-  .home-button {
-    position: static;  /* ←←← 上部固定解除で被り防止 */
-    margin-bottom: 10px;
-    display: block;
-    text-align: center;
+  .support-group,
+  .search-group {
+    flex-direction: column;
+    width: 100%;
   }
 
-  #calendar {
-    padding: 10px;
-    margin-top: 10px;
-  }
-
-  #userSearchInput {
-    width: 80vw;
-    font-size: 16px;
-    padding: 12px;
-  }
-
+  #supportAmount,
+  #userSearchInput,
+  #supportButton,
   #userSearchButton,
   #resetCalendarButton {
-    font-size: 16px;
-    padding: 12px 20px;
-    margin-top: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  #toggleVisibilityBtn {
-    font-size: 16px;
-    margin: 20px auto;
-    padding: 12px 20px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .modal-content {

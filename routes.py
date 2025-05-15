@@ -30,13 +30,11 @@ def home_page():
     user_obj = User.query.filter_by(username=username).first() if username else None
     point = user_obj.point if user_obj else None
 
-    # ✅ 通知を読み取り＆表示後にクリア
     notice = user_obj.notice_message if user_obj else None
     if user_obj and user_obj.notice_message:
         user_obj.notice_message = None
         db.session.commit()
     
-    print("🧪 セッションの中身:", dict(session))
     return render_template("home.html", user=username, point=point, notice=notice)
 
 @main_bp.route("/score")
