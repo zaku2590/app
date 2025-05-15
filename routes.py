@@ -476,14 +476,22 @@ def exchange():
         return redirect("/login")
 
     if request.method == "POST":
-        if user.point < 50000:
+        if user.point < 20000:
             return "ポイントが足りません", 400
         if user.exchange_status == "pending":
             return "すでに申請中です", 400
 
-        user.point -= 50000
+        user.point -= 20000
         user.exchange_status = "pending"
         db.session.commit()
         return redirect("/exchange")
 
     return render_template("exchange.html", point=user.point, status=user.exchange_status)
+
+@main_bp.route("/robots.txt")
+def robots_txt():
+    return current_app.send_static_file("robots.txt")
+
+@main_bp.route("/sitemap.xml")
+def sitemap():
+    return current_app.send_static_file("sitemap.xml")

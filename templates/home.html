@@ -4,25 +4,39 @@
      crossorigin="anonymous"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ぽもログは、ポモドーロ・カレンダー・AI評価などを活用して、スキマ時間の努力を“見える化”するWebサービスです。">
+    <meta name="keywords" content="ポモドーロ, ぽもログ, 勉強垢, カレンダー, スキマ時間, AI評価, 習慣化, タスク管理">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://pomolog.net/">
     <title>pomolog</title>
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "ぽもログ",
+    "url": "https://pomolog.net/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://pomolog.net/blog?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 </head>
 <body>
   <div class="header-container">
-  <!-- 左：ロゴ + 交換 -->
   <div class="left-header">
     <div class="logo">ぽもログ</div>
     <a href="/exchange" class="exchange-button">🎁 ポイント交換</a>
   </div>
 
-  <!-- 中央：こんにちは -->
   {% if user %}
     <div class="center-header">
       <div class="welcome">こんにちは、{% if session.twitter_user %}@{% endif %}{{ user }} さん</div>
     </div>
   {% endif %}
 
-  <!-- 右：ポイント + ログアウト -->
   {% if user %}
     <div class="user-actions">
       {% if notice %}
