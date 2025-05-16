@@ -182,6 +182,20 @@ body {
   color: white;
 }
 
+#supportButton,
+#supportAmount {
+  display: none;
+}
+
+.btn-private {
+  background-color: #f44336;  /* 赤 */
+  color: white;
+}
+
+.btn-private:hover {
+  background-color: #d32f2f;
+}
+
 /* ✅ モバイル対応 */
 @media (max-width: 768px) {
   .calendar-actions {

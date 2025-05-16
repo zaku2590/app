@@ -10,11 +10,6 @@ document.addEventListener('DOMContentLoaded', function () {
   let calendar = null;
   let selectedUsername = null;
 
-  // ✅ 初期状態で応援UI非表示
-  supportButton.style.display = "none";
-  supportAmountInput.style.display = "none";
-  resetCalendarButton.style.display = "none";
-
   function updateToggleButton(isPublic) {
     toggleBtn.textContent = isPublic
       ? "🔓 公開中（クリックで非公開）"
@@ -22,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     toggleBtn.classList.remove("btn-public", "btn-private");
     toggleBtn.classList.add(isPublic ? "btn-public" : "btn-private");
+    toggleBtn.style.display = "block";
   }
 
   fetch("/get_visibility_status")
@@ -49,12 +45,34 @@ document.addEventListener('DOMContentLoaded', function () {
     if (calendar) calendar.destroy();
     selectedUsername = username;
 
+    // UIの一元制御
+    if (readOnly && username) {
+      resetCalendarButton.style.display = "inline-block";
+      toggleBtn.style.display = "none";
+      supportButton.style.display = "inline-block";
+      supportAmountInput.style.display = "inline-block";
+    } else {
+      resetCalendarButton.style.display = "none";
+      supportButton.style.display = "none";
+      supportAmountInput.style.display = "none";
+      toggleBtn.style.display = "inline-block";
+    }
+
     calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: "dayGridMonth",
       events: events,
       height: 'auto',
       dateClick: function (info) {
         const dateStr = info.dateStr;
+        let url = `/get_memo?date=${dateStr}`;
+        if (readOnly && username) url += `&username=${username}`;
+
+        fetch(url)
+          .then(res => res.json())
+          .then(data => openModal(dateStr, data.count || 0, data.memo || "", readOnly));
+      },
+      eventClick: function (info) {
+        const dateStr = info.event.startStr;
         let url = `/get_memo?date=${dateStr}`;
         if (readOnly && username) url += `&username=${username}`;
 
@@ -71,9 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     .then(res => res.json())
     .then(events => renderCalendar(events, false));
 
-  document.getElementById("userSearchButton").addEventListener("click", loadCalendarForUser);
-
-  function loadCalendarForUser() {
+  document.getElementById("userSearchButton").addEventListener("click", function () {
     const username = userSearchInput.value.trim();
     errorBox.textContent = "";
     if (!username) return;
@@ -89,29 +105,19 @@ document.addEventListener('DOMContentLoaded', function () {
       })
       .then(events => {
         renderCalendar(events, true, username);
-        resetCalendarButton.style.display = "inline-block";
-        toggleBtn.style.display = "none";
-        supportButton.style.display = "inline-block";
-        supportAmountInput.style.display = "inline-block";
       })
       .catch(error => {
         errorBox.textContent = "❌ " + error.message;
       });
-  }
+  });
 
   resetCalendarButton.addEventListener("click", () => {
     userSearchInput.value = "";
     errorBox.textContent = "";
-    resetCalendarButton.style.display = "none";
-    supportButton.style.display = "none";
-    supportAmountInput.style.display = "none";
 
     fetch("/get_progress_calendar")
       .then(res => res.json())
-      .then(events => {
-        renderCalendar(events, false);
-        toggleBtn.style.display = "inline-block";
-      });
+      .then(events => renderCalendar(events, false));
   });
 
   supportButton.addEventListener("click", () => {
