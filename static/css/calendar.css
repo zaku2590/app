@@ -99,7 +99,6 @@ body {
   display: block;
 }
 
-/* ✅ FullCalendarラップで横スクロール防止 */
 .calendar-wrapper {
   width: 100%;
   overflow-x: auto;
@@ -114,9 +113,9 @@ body {
   box-sizing: border-box;
   background-color: white;
   margin-top: 20px;
+  margin-bottom: 40px;
 }
 
-/* FullCalendar内部の横はみ出し対策 */
 .fc,
 .fc-scrollgrid,
 .fc-view-harness {
@@ -130,7 +129,6 @@ body {
   white-space: pre-wrap !important;
 }
 
-/* ✏️ メモモーダル */
 #memoModal {
   display: none;
   position: fixed;
