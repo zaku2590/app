@@ -10,7 +10,6 @@ def generate_response_score(data):
     count = data["count"]
     memo = data["memo"]
 
-    # 回数に応じたランク
     if count >= 15:
         grade = "SSS"
     elif count >= 12:
@@ -26,7 +25,6 @@ def generate_response_score(data):
     else:
         grade = "D"
 
-    # コメントはOpenAIで優しい一言を生成
     prompt = f"""
     今日のポモドーロ回数は {count} 回、以下のメモがありました：
     「{memo}」

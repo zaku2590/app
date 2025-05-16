@@ -138,7 +138,6 @@ body {
   transform: scale(1.05);
 }
 
-/* 🔄 スピナー追加 */
 .spinner {
   border: 6px solid #f3f3f3;
   border-top: 6px solid #ffffff;

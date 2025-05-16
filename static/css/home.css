@@ -175,9 +175,9 @@ body, html {
 
 .feature img {
   width: auto;
-  height: 120px;           /* ✅ 高さを固定 */
+  height: 120px;           
   max-height: 120px;
-  object-fit: contain;     /* ✅ 比率維持で収める */
+  object-fit: contain;     
   margin: 0 auto 15px;
   display: block;
 }

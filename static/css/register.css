@@ -1,4 +1,3 @@
-/* ページ全体の背景 */
 body {
     background-color: #1e5aa5;
     display: flex;
@@ -9,25 +8,22 @@ body {
     font-family: Arial, sans-serif;
 }
 
-/* 新規登録フォームのコンテナ */
 .register-container {
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 320px; /* 横幅を固定 */
+    width: 320px;
 }
 
-/* タイトル */
 h2 {
     font-size: 20px;
     margin-bottom: 20px;
 }
 
-/* 入力フィールド */
 .register-form input {
-    width: calc(100% - 20px); /* 横幅を調整 */
+    width: calc(100% - 20px); 
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -39,7 +35,6 @@ h2 {
     margin-right: auto;
 }
 
-/* ボタン */
 .register-form button {
     width: 100%;
     padding: 10px;
@@ -55,7 +50,6 @@ h2 {
     background-color: #218838;
 }
 
-/* ログイン画面へのリンク */
 .login-redirect {
     margin-top: 20px;
     font-size: 14px;

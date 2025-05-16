@@ -11,7 +11,6 @@ body {
   margin-bottom: 30px;
 }
 
-/* ホームボタン */
 .home-button {
   position: absolute;
   top: 10px;
@@ -87,12 +86,12 @@ body {
   line-height: 1.5;
 
   display: -webkit-box;
-  display: box;                     /* 標準構文（今は一部対応のみ） */
+  display: box;                     
   -webkit-box-orient: vertical;
   box-orient: vertical;
 
   -webkit-line-clamp: 2;
-  line-clamp: 2;                    /* 標準構文（今後の互換性用） */
+  line-clamp: 2;                    
 
   overflow: hidden;
   text-overflow: ellipsis;

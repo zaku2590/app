@@ -45,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (calendar) calendar.destroy();
     selectedUsername = username;
 
-    // UIの一元制御
     if (readOnly && username) {
       resetCalendarButton.style.display = "inline-block";
       toggleBtn.style.display = "none";

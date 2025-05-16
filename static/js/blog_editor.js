@@ -47,7 +47,6 @@ function imageHandler() {
   };
 }
 
-// base64貼り付け無効化
 quill.clipboard.addMatcher('IMG', function(node, delta) {
   const src = node.getAttribute('src');
   if (src && src.startsWith('data:image')) {
@@ -57,7 +56,6 @@ quill.clipboard.addMatcher('IMG', function(node, delta) {
   return delta;
 });
 
-// 本文を hidden input に保存
 const form = document.querySelector('form');
 form.addEventListener('submit', function () {
   const contentInput = document.querySelector('input[name=content]');

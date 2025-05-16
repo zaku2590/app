@@ -31,7 +31,6 @@ function fetchTodayPomodoroCount() {
 
 function switchMode() {
   if (isWorkMode) {
-    // 作業モードが終わったらカウントアップ（ログイン確認付き）
     fetch("/record_progress", { method: "POST" })
       .then(res => {
         if (res.status === 401) {
